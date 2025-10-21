@@ -43,6 +43,28 @@ export const testHasValueError = (argumentName, callback, errorMessagesObj) => {
   testNullError(argumentName, callback, errorMessagesObj);
 };
 
+export const testArrayOfAtLeast2ElementsError = (
+  argumentName,
+  callback,
+  errorMessagesObj
+) => {
+  testHasValueError(argumentName, callback, errorMessagesObj);
+  it.each([
+    ["is not an array", "not an array", errorMessagesObj.notAnArray],
+    ["array is empty", [], errorMessagesObj.notAnArrayOfAtLeast2Elements],
+    [
+      "array length is less than 2",
+      [1],
+      errorMessagesObj.notAnArrayOfAtLeast2Elements,
+    ],
+  ])(
+    `should throw an error if ${argumentName} %s`,
+    (_, value, errorMessage) => {
+      expect(() => callback(value)).toThrow(errorMessage);
+    }
+  );
+};
+
 export const testArrayOfTwoIntegerNumbersError = (
   argumentName,
   callback,
