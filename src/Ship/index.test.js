@@ -1,63 +1,18 @@
 import Ship from ".";
+import { createConstructorCallback } from "../test-utils";
+import { testIsNotAPositiveIntegerNumberError } from "../test-utils/validation";
 import { shipLengthValidationMessages } from "./utils/constants";
 
 describe("Ship class module", () => {
   describe("constructor", () => {
     describe("invalid arguments", () => {
       describe("length", () => {
-        it("should throw an error if no length is provided", () => {
-          expect(() => new Ship()).toThrow(
-            shipLengthValidationMessages.invalid.required
-          );
-        });
-
-        it("should throw an error if length is undefined", () => {
-          expect(() => new Ship(undefined)).toThrow(
-            shipLengthValidationMessages.invalid.required
-          );
-        });
-
-        it("should throw an error if length is null", () => {
-          expect(() => new Ship(null)).toThrow(
-            shipLengthValidationMessages.invalid.required
-          );
-        });
-
-        it("should throw an error if length is not a number", () => {
-          expect(() => new Ship("not a number")).toThrow(
-            shipLengthValidationMessages.invalid.notANumber
-          );
-        });
-
-        it("should throw an error if length is NaN", () => {
-          expect(() => new Ship(NaN)).toThrow(
-            shipLengthValidationMessages.invalid.notANumber
-          );
-        });
-
-        it("should throw an error if length is not a finite number", () => {
-          expect(() => new Ship(Infinity)).toThrow(
-            shipLengthValidationMessages.invalid.notAFiniteNumber
-          );
-        });
-
-        it("should throw an error if length is not an integer number", () => {
-          expect(() => new Ship(1.5)).toThrow(
-            shipLengthValidationMessages.invalid.notAnIntegerNumber
-          );
-        });
-
-        it("should throw an error if length is a negative number", () => {
-          expect(() => new Ship(-1)).toThrow(
-            shipLengthValidationMessages.invalid.isNegativeNumber
-          );
-        });
-
-        it("should throw an error if length is zero", () => {
-          expect(() => new Ship(0)).toThrow(
-            shipLengthValidationMessages.invalid.isZero
-          );
-        });
+        // test that it should throw an error if length is not a positive integer number
+        testIsNotAPositiveIntegerNumberError(
+          "length",
+          createConstructorCallback(Ship),
+          shipLengthValidationMessages.invalid
+        );
       });
     });
 

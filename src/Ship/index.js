@@ -1,4 +1,5 @@
-import { validateShipInputs } from "./utils";
+import { createUniqueId } from "../utils";
+import { validateShipInputs } from "./utils/validation";
 
 class Ship {
   #id;
@@ -11,7 +12,7 @@ class Ship {
       throw new Error(validationResult.message);
     }
 
-    this.#id = crypto.randomUUID();
+    this.#id = createUniqueId();
     this.#length = length;
     this.#hits = 0;
   }

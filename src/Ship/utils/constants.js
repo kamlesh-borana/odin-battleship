@@ -1,3 +1,12 @@
+export const shipInputsValidationMessages = {
+  valid: {
+    default: "Ship inputs are valid",
+  },
+  invalid: {
+    default: "Invalid ship inputs",
+  },
+};
+
 export const shipLengthValidationMessages = {
   valid: {
     default: "Ship length is valid",

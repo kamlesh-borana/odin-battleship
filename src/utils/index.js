@@ -57,3 +57,7 @@ export const isString = (value) => {
 export const createValidationResult = (isValid, message) => {
   return { isValid, message };
 };
+
+export const createUniqueId = () => {
+  return crypto.randomUUID();
+};
