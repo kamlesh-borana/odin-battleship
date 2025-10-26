@@ -9,6 +9,15 @@ export const VALID_GAMEBOARD_DIRECTIONS = [
   DIRECTIONS.VERTICAL,
 ];
 
+export const gameboardInputsValidationMessages = {
+  valid: {
+    default: "Gameboard inputs are valid",
+  },
+  invalid: {
+    default: "Invalid gameboard inputs",
+  },
+};
+
 export const gameboardDimensionsValidationMessages = {
   valid: {
     default: "Gameboard dimensions are valid",
@@ -17,9 +26,9 @@ export const gameboardDimensionsValidationMessages = {
     default: "Invalid gameboard dimensions",
     required:
       "Gameboard dimensions are required. It cannot be null or undefined.",
-    undefined:
+    isUndefined:
       "Gameboard dimensions are required. It cannot be null or undefined.",
-    null: "Gameboard dimensions must be an array. It cannot be null.",
+    isNull: "Gameboard dimensions must be an array. It cannot be null.",
     notAnArray: "Gameboard dimensions must be an array.",
     notAnArrayOfTwoElements:
       "Gameboard dimensions must be an array of two elements.",
@@ -34,6 +43,33 @@ export const gameboardDimensionsValidationMessages = {
   },
 };
 
+export const gameboardGetShipAtValidationMessages = {
+  valid: {
+    default: "Gameboard get ship at inputs are valid",
+  },
+  invalid: {
+    default: "Invalid gameboard get ship at inputs",
+  },
+};
+
+export const gameboardIsCellHitValidationMessages = {
+  valid: {
+    default: "Gameboard is cell hit inputs are valid",
+  },
+  invalid: {
+    default: "Invalid gameboard is cell hit inputs",
+  },
+};
+
+export const gameboardIsCellMissValidationMessages = {
+  valid: {
+    default: "Gameboard is cell miss inputs are valid",
+  },
+  invalid: {
+    default: "Invalid gameboard is cell miss inputs",
+  },
+};
+
 export const gameboardCoordinatesValidationMessages = {
   valid: {
     default: "Gameboard coordinates are valid",
@@ -42,9 +78,10 @@ export const gameboardCoordinatesValidationMessages = {
     default: "Invalid gameboard coordinates",
     required:
       "Gameboard coordinates are required. It cannot be null or undefined.",
-    undefined:
+    isUndefined:
       "Gameboard coordinates are required. It cannot be null or undefined.",
-    null: "Gameboard coordinates are required. It cannot be null or undefined.",
+    isNull:
+      "Gameboard coordinates are required. It cannot be null or undefined.",
     notAnArray: "Gameboard coordinates must be an array.",
     notAnArrayOfTwoElements:
       "Gameboard coordinates must be an array of two elements.",
@@ -65,8 +102,8 @@ export const gameboardShipValidationMessages = {
   invalid: {
     default: "Invalid gameboard ship",
     required: "Gameboard ship is required. It cannot be null or undefined.",
-    undefined: "Gameboard ship is required. It cannot be null or undefined.",
-    null: "Gameboard ship is required. It cannot be null or undefined.",
+    isUndefined: "Gameboard ship is required. It cannot be null or undefined.",
+    isNull: "Gameboard ship is required. It cannot be null or undefined.",
     notAnObject: "Gameboard ship must be an object.",
     notAShipInstanceObject:
       "Gameboard ship must be an instance of the Ship class.",
@@ -106,9 +143,9 @@ export const gameboardDirectionValidationMessages = {
     default: "Invalid gameboard direction",
     required:
       "Gameboard direction is required. It cannot be null or undefined.",
-    undefined:
+    isUndefined:
       "Gameboard direction is required. It cannot be null or undefined.",
-    null: "Gameboard direction is required. It cannot be null or undefined.",
+    isNull: "Gameboard direction is required. It cannot be null or undefined.",
     notAString: "Gameboard direction must be a string.",
     notAValidDirection:
       "Gameboard direction must be a valid direction. Valid directions are: " +

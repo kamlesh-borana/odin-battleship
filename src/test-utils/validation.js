@@ -5,7 +5,7 @@ export const testUndefinedError = (
 ) => {
   it.each([
     ["not provided", , errorMessagesObj.required],
-    ["undefined", undefined, errorMessagesObj.undefined],
+    ["undefined", undefined, errorMessagesObj.isUndefined],
   ])(
     `should throw an error if ${argumentName} is %s`,
     (_, value, errorMessage) => {
@@ -16,16 +16,19 @@ export const testUndefinedError = (
 
 export const testNullError = (argumentName, callback, errorMessagesObj) => {
   it(`should throw an error if ${argumentName} is null`, () => {
-    expect(() => callback(null)).toThrow(errorMessagesObj.null);
+    expect(() => callback(null)).toThrow(errorMessagesObj.isNull);
   });
 };
 
 export const testHasNoValueError = (
   argumentName,
   callback,
-  errorMessagesObj
+  errorMessagesObj,
+  isOptional = false
 ) => {
-  testUndefinedError(argumentName, callback, errorMessagesObj);
+  if (!isOptional) {
+    testUndefinedError(argumentName, callback, errorMessagesObj);
+  }
   testNullError(argumentName, callback, errorMessagesObj);
 };
 
@@ -108,63 +111,61 @@ export const testIsNotAPositiveIntegerNumberError = (
   });
 };
 
-export const testArrayOfAtLeast1ElementsError = (
+export const testIsNotAnArrayError = (
   argumentName,
   callback,
-  errorMessagesObj
+  errorMessagesObj,
+  isOptional = false
 ) => {
-  testHasValueError(argumentName, callback, errorMessagesObj);
-  it.each([
-    ["is not an array", "not an array", errorMessagesObj.notAnArray],
-    ["array is empty", [], errorMessagesObj.notAnArrayOfAtLeast1Element],
-  ])(
-    `should throw an error if ${argumentName} %s`,
-    (_, value, errorMessage) => {
-      expect(() => callback(value)).toThrow(errorMessage);
-    }
-  );
+  testHasNoValueError(argumentName, callback, errorMessagesObj, isOptional);
+
+  it(`should throw an error if ${argumentName} is not an array`, () => {
+    expect(() => callback("not an array")).toThrow(errorMessagesObj.notAnArray);
+  });
 };
 
-export const testArrayOfAtLeast2ElementsError = (
+export const testIsNotAnArrayOfTwoElementsError = (
   argumentName,
   callback,
-  errorMessagesObj
+  errorMessagesObj,
+  isOptional = false
 ) => {
-  testHasValueError(argumentName, callback, errorMessagesObj);
+  testIsNotAnArrayError(argumentName, callback, errorMessagesObj, isOptional);
+
   it.each([
-    ["is not an array", "not an array", errorMessagesObj.notAnArray],
-    ["array is empty", [], errorMessagesObj.notAnArrayOfAtLeast2Elements],
+    ["array is empty", [], errorMessagesObj.notAnArrayOf2Elements],
     [
       "array length is less than 2",
       [1],
-      errorMessagesObj.notAnArrayOfAtLeast2Elements,
+      errorMessagesObj.notAnArrayOf2Elements,
     ],
-  ])(
-    `should throw an error if ${argumentName} %s`,
-    (_, value, errorMessage) => {
-      expect(() => callback(value)).toThrow(errorMessage);
-    }
-  );
-};
-
-export const testArrayOfTwoIntegerNumbersError = (
-  argumentName,
-  callback,
-  errorMessagesObj
-) => {
-  it.each([
-    ["is not an array", "not an array", errorMessagesObj.notAnArray],
-    ["array is empty", [], errorMessagesObj.notAnArrayOfTwoElements],
     [
       "array length is greater than 2",
       [1, 2, 3],
-      errorMessagesObj.notAnArrayOfTwoElements,
+      errorMessagesObj.notAnArrayOf2Elements,
     ],
-    [
-      "array length is less than 2",
-      [1],
-      errorMessagesObj.notAnArrayOfTwoElements,
-    ],
+  ])(
+    `should throw an error if ${argumentName} %s`,
+    (_, value, errorMessage) => {
+      expect(() => callback(value)).toThrow(errorMessage);
+    }
+  );
+};
+
+export const testIsNotAnArrayOfTwoNumbersError = (
+  argumentName,
+  callback,
+  errorMessagesObj,
+  isOptional = false
+) => {
+  testIsNotAnArrayOfTwoElementsError(
+    argumentName,
+    callback,
+    errorMessagesObj,
+    isOptional
+  );
+
+  it.each([
     [
       "array elements are not numbers",
       [1, "2"],
@@ -175,11 +176,55 @@ export const testArrayOfTwoIntegerNumbersError = (
       [1, NaN],
       errorMessagesObj.notAnArrayOfTwoNumbers,
     ],
+  ])(
+    `should throw an error if ${argumentName} %s`,
+    (_, value, errorMessage) => {
+      expect(() => callback(value)).toThrow(errorMessage);
+    }
+  );
+};
+
+export const testIsNotAnArrayOfTwoFiniteNumbersError = (
+  argumentName,
+  callback,
+  errorMessagesObj,
+  isOptional = false
+) => {
+  testIsNotAnArrayOfTwoNumbersError(
+    argumentName,
+    callback,
+    errorMessagesObj,
+    isOptional
+  );
+
+  it.each([
     [
       "array elements are not finite numbers",
       [1, Infinity],
       errorMessagesObj.notAnArrayOfTwoFiniteNumbers,
     ],
+  ])(
+    `should throw an error if ${argumentName} %s`,
+    (_, value, errorMessage) => {
+      expect(() => callback(value)).toThrow(errorMessage);
+    }
+  );
+};
+
+export const testIsNotAnArrayOfTwoIntegerNumbersError = (
+  argumentName,
+  callback,
+  errorMessagesObj,
+  isOptional = false
+) => {
+  testIsNotAnArrayOfTwoFiniteNumbersError(
+    argumentName,
+    callback,
+    errorMessagesObj,
+    isOptional
+  );
+
+  it.each([
     [
       "array elements are not integer numbers",
       [1, 1.5],
@@ -193,12 +238,19 @@ export const testArrayOfTwoIntegerNumbersError = (
   );
 };
 
-export const testArrayOfTwoPositiveIntegerNumbersError = (
+export const testIsNotAnArrayOfTwoPositiveIntegerNumbersError = (
   argumentName,
   callback,
-  errorMessagesObj
+  errorMessagesObj,
+  isOptional = false
 ) => {
-  testArrayOfTwoIntegerNumbersError(argumentName, callback, errorMessagesObj);
+  testIsNotAnArrayOfTwoIntegerNumbersError(
+    argumentName,
+    callback,
+    errorMessagesObj,
+    isOptional
+  );
+
   it.each([
     [
       "array elements contain negative numbers",
@@ -216,4 +268,30 @@ export const testArrayOfTwoPositiveIntegerNumbersError = (
       expect(() => callback(value)).toThrow(errorMessage);
     }
   );
+};
+
+export const testIsNotAnObjectError = (
+  argumentName,
+  callback,
+  errorMessagesObj
+) => {
+  testHasNoValueError(argumentName, callback, errorMessagesObj);
+
+  it(`should throw an error if ${argumentName} is not an object`, () => {
+    expect(() => callback("not an object")).toThrow(
+      errorMessagesObj.notAnObject
+    );
+  });
+};
+
+export const testIsNotAStringError = (
+  argumentName,
+  callback,
+  errorMessagesObj
+) => {
+  testHasNoValueError(argumentName, callback, errorMessagesObj);
+
+  it(`should throw an error if ${argumentName} is not a string`, () => {
+    expect(() => callback(1)).toThrow(errorMessagesObj.notAString);
+  });
 };

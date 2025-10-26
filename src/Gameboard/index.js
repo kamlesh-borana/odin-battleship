@@ -1,13 +1,14 @@
+import { createUniqueId } from "../utils";
+import { createGameboardBoard } from "./utils";
+import { DEFAULT_GAMEBOARD_DIMENSIONS, DIRECTIONS } from "./utils/constants";
 import {
-  createGameboardBoard,
   validateGameboardInputs,
   validateGetShipAtInputs,
   validateIsCellHitInputs,
   validateIsCellMissInputs,
   validatePlaceShipInputs,
   validateReceiveAttackInputs,
-} from "./utils";
-import { DEFAULT_GAMEBOARD_DIMENSIONS, DIRECTIONS } from "./utils/constants";
+} from "./utils/validation";
 
 class Gameboard {
   #id;
@@ -15,18 +16,16 @@ class Gameboard {
   #board;
   #ships;
 
-  constructor(dimensions) {
+  constructor(dimensions = DEFAULT_GAMEBOARD_DIMENSIONS) {
     const validationResult = validateGameboardInputs(dimensions);
     if (!validationResult.isValid) {
       throw new Error(validationResult.message);
     }
 
-    this.#id = crypto.randomUUID();
+    this.#id = createUniqueId();
 
     // Copy dimensions to prevent external mutation of internal state
-    this.#dimensions = dimensions
-      ? [...dimensions]
-      : [...DEFAULT_GAMEBOARD_DIMENSIONS];
+    this.#dimensions = [...dimensions];
 
     this.#board = createGameboardBoard(this.#dimensions);
     this.#ships = [];
