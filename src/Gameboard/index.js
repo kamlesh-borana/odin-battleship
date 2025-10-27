@@ -1,6 +1,5 @@
-import { createUniqueId } from "../utils";
-import { createGameboardBoard } from "./utils";
-import { DEFAULT_GAMEBOARD_DIMENSIONS, DIRECTIONS } from "./utils/constants";
+import { createGameboardBoard, createUniqueId } from "../utils";
+import { DEFAULT_GAMEBOARD_DIMENSIONS, DIRECTIONS } from "../utils/constants";
 import {
   validateGameboardInputs,
   validateGetShipAtInputs,

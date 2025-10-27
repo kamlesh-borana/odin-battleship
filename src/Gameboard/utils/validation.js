@@ -1,45 +1,42 @@
-import {
-  createValidationResult,
-  hasValue,
-  isFiniteNumber,
-  isFunction,
-  isIntegerNumber,
-  isNegativeNumber,
-  isNumber,
-  isZero,
-} from "../../utils";
-import {
-  validateIsArrayOfTwoIntegerNumbers,
-  validateIsArrayOfTwoPositiveIntegerNumbers,
-  validateIsObject,
-  validateIsString,
-} from "../../utils/validation";
+import { createValidationResult } from "../../utils";
 import {
   DIRECTIONS,
   gameboardCoordinatesValidationMessages,
-  gameboardDimensionsValidationMessages,
   gameboardDirectionValidationMessages,
+  shipValidationMessages,
+} from "../../utils/constants";
+import {
+  validateGameboardCoordinates,
+  validateGameboardDirection,
+} from "../../utils/gameboard";
+import { validateShip } from "../../utils/ship";
+import { validateIsArrayOfTwoPositiveIntegerNumbers } from "../../utils/validation";
+import {
+  gameboardDimensionsValidationMessages,
   gameboardGetShipAtValidationMessages,
   gameboardInputsValidationMessages,
   gameboardIsCellHitValidationMessages,
   gameboardIsCellMissValidationMessages,
   gameboardPlaceShipValidationMessages,
   gameboardReceiveAttackValidationMessages,
-  gameboardShipValidationMessages,
-  VALID_GAMEBOARD_DIRECTIONS,
 } from "./constants";
 
-const validateGameboardDimensions = (dimensions) => {
+const validateGameboardDimensions = (
+  dimensions,
+  validationMessagesObj = gameboardDimensionsValidationMessages
+) => {
   const validationResult = validateIsArrayOfTwoPositiveIntegerNumbers(
     dimensions,
-    gameboardDimensionsValidationMessages
+    validationMessagesObj
   );
   return validationResult;
 };
 
 export const validateGameboardInputs = (dimensions) => {
-  const gameboardDimensionsValidationResult =
-    validateGameboardDimensions(dimensions);
+  const gameboardDimensionsValidationResult = validateGameboardDimensions(
+    dimensions,
+    gameboardDimensionsValidationMessages
+  );
   if (!gameboardDimensionsValidationResult.isValid) {
     return gameboardDimensionsValidationResult;
   }
@@ -50,39 +47,11 @@ export const validateGameboardInputs = (dimensions) => {
   );
 };
 
-const validateGameboardCoordinates = (coordinates, dimensions) => {
-  const isArrayOfTwoIntegerNumbersValidationResult =
-    validateIsArrayOfTwoIntegerNumbers(
-      coordinates,
-      gameboardCoordinatesValidationMessages
-    );
-  if (!isArrayOfTwoIntegerNumbersValidationResult.isValid) {
-    return isArrayOfTwoIntegerNumbersValidationResult;
-  }
-
-  const [row, column] = coordinates;
-  if (
-    row < 0 ||
-    column < 0 ||
-    row >= dimensions[0] ||
-    column >= dimensions[1]
-  ) {
-    return createValidationResult(
-      false,
-      gameboardCoordinatesValidationMessages.invalid.outOfBounds
-    );
-  }
-
-  return createValidationResult(
-    true,
-    gameboardCoordinatesValidationMessages.valid.default
-  );
-};
-
 export const validateGetShipAtInputs = (coordinates, dimensions) => {
   const gameboardCoordinatesValidationResult = validateGameboardCoordinates(
     coordinates,
-    dimensions
+    dimensions,
+    gameboardCoordinatesValidationMessages
   );
   if (!gameboardCoordinatesValidationResult.isValid) {
     return gameboardCoordinatesValidationResult;
@@ -97,7 +66,8 @@ export const validateGetShipAtInputs = (coordinates, dimensions) => {
 export const validateIsCellHitInputs = (coordinates, dimensions) => {
   const gameboardCoordinatesValidationResult = validateGameboardCoordinates(
     coordinates,
-    dimensions
+    dimensions,
+    gameboardCoordinatesValidationMessages
   );
   if (!gameboardCoordinatesValidationResult.isValid) {
     return gameboardCoordinatesValidationResult;
@@ -112,7 +82,8 @@ export const validateIsCellHitInputs = (coordinates, dimensions) => {
 export const validateIsCellMissInputs = (coordinates, dimensions) => {
   const gameboardCoordinatesValidationResult = validateGameboardCoordinates(
     coordinates,
-    dimensions
+    dimensions,
+    gameboardCoordinatesValidationMessages
   );
   if (!gameboardCoordinatesValidationResult.isValid) {
     return gameboardCoordinatesValidationResult;
@@ -124,121 +95,6 @@ export const validateIsCellMissInputs = (coordinates, dimensions) => {
   );
 };
 
-const validateGameboardDirection = (direction) => {
-  const isStringValidationResult = validateIsString(
-    direction,
-    gameboardDirectionValidationMessages
-  );
-  if (!isStringValidationResult.isValid) {
-    return isStringValidationResult;
-  }
-
-  const lowerCaseDirection = direction.toLowerCase();
-  if (!VALID_GAMEBOARD_DIRECTIONS.includes(lowerCaseDirection)) {
-    return createValidationResult(
-      false,
-      gameboardDirectionValidationMessages.invalid.notAValidDirection
-    );
-  }
-
-  return createValidationResult(
-    true,
-    gameboardDirectionValidationMessages.valid.default
-  );
-};
-
-const validateGameboardShip = (ship) => {
-  const isObjectValidationResult = validateIsObject(
-    ship,
-    gameboardShipValidationMessages
-  );
-  if (!isObjectValidationResult.isValid) {
-    return isObjectValidationResult;
-  }
-
-  if (!hasValue(ship.id)) {
-    return createValidationResult(
-      false,
-      gameboardShipValidationMessages.invalid.noIdProperty
-    );
-  }
-
-  if (!hasValue(ship.length)) {
-    return createValidationResult(
-      false,
-      gameboardShipValidationMessages.invalid.noLengthProperty
-    );
-  }
-
-  if (!isNumber(ship.length)) {
-    return createValidationResult(
-      false,
-      gameboardShipValidationMessages.invalid.lengthNotANumber
-    );
-  }
-
-  if (!isFiniteNumber(ship.length)) {
-    return createValidationResult(
-      false,
-      gameboardShipValidationMessages.invalid.lengthNotAFiniteNumber
-    );
-  }
-
-  if (!isIntegerNumber(ship.length)) {
-    return createValidationResult(
-      false,
-      gameboardShipValidationMessages.invalid.lengthNotAnIntegerNumber
-    );
-  }
-
-  if (isNegativeNumber(ship.length)) {
-    return createValidationResult(
-      false,
-      gameboardShipValidationMessages.invalid.lengthIsNegativeNumber
-    );
-  }
-
-  if (isZero(ship.length)) {
-    return createValidationResult(
-      false,
-      gameboardShipValidationMessages.invalid.lengthIsZero
-    );
-  }
-
-  if (!hasValue(ship.hit)) {
-    return createValidationResult(
-      false,
-      gameboardShipValidationMessages.invalid.noHitMethod
-    );
-  }
-
-  if (!isFunction(ship.hit)) {
-    return createValidationResult(
-      false,
-      gameboardShipValidationMessages.invalid.hitMethodNotAFunction
-    );
-  }
-
-  if (!hasValue(ship.isSunk)) {
-    return createValidationResult(
-      false,
-      gameboardShipValidationMessages.invalid.noIsSunkMethod
-    );
-  }
-
-  if (!isFunction(ship.isSunk)) {
-    return createValidationResult(
-      false,
-      gameboardShipValidationMessages.invalid.isSunkMethodNotAFunction
-    );
-  }
-
-  return createValidationResult(
-    true,
-    gameboardShipValidationMessages.valid.default
-  );
-};
-
 export const validatePlaceShipInputs = (
   ship,
   coordinates,
@@ -246,21 +102,24 @@ export const validatePlaceShipInputs = (
   direction,
   board
 ) => {
-  const gameboardShipValidationResult = validateGameboardShip(ship);
-  if (!gameboardShipValidationResult.isValid) {
-    return gameboardShipValidationResult;
+  const shipValidationResult = validateShip(ship, shipValidationMessages);
+  if (!shipValidationResult.isValid) {
+    return shipValidationResult;
   }
 
   const gameboardCoordinatesValidationResult = validateGameboardCoordinates(
     coordinates,
-    dimensions
+    dimensions,
+    gameboardCoordinatesValidationMessages
   );
   if (!gameboardCoordinatesValidationResult.isValid) {
     return gameboardCoordinatesValidationResult;
   }
 
-  const gameboardDirectionValidationResult =
-    validateGameboardDirection(direction);
+  const gameboardDirectionValidationResult = validateGameboardDirection(
+    direction,
+    gameboardDirectionValidationMessages
+  );
   if (!gameboardDirectionValidationResult.isValid) {
     return gameboardDirectionValidationResult;
   }
@@ -323,7 +182,8 @@ export const validateReceiveAttackInputs = (
 ) => {
   const gameboardCoordinatesValidationResult = validateGameboardCoordinates(
     coordinates,
-    dimensions
+    dimensions,
+    gameboardCoordinatesValidationMessages
   );
   if (!gameboardCoordinatesValidationResult.isValid) {
     return gameboardCoordinatesValidationResult;

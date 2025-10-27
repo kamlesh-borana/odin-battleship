@@ -1,6 +1,6 @@
 import Gameboard from "..";
-import { createMockShip } from "../test-utils";
-import { DIRECTIONS } from "../utils/constants";
+import { createMockShip } from "../../test-utils/ship";
+import { DIRECTIONS } from "../../utils/constants";
 
 export function describeAllShipsSunkTests() {
   describe("allShipsSunk", () => {

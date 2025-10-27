@@ -1,14 +1,3 @@
-export const DEFAULT_GAMEBOARD_DIMENSIONS = [10, 10];
-
-export const DIRECTIONS = {
-  HORIZONTAL: "horizontal",
-  VERTICAL: "vertical",
-};
-export const VALID_GAMEBOARD_DIRECTIONS = [
-  DIRECTIONS.HORIZONTAL,
-  DIRECTIONS.VERTICAL,
-];
-
 export const gameboardInputsValidationMessages = {
   valid: {
     default: "Gameboard inputs are valid",
@@ -67,89 +56,6 @@ export const gameboardIsCellMissValidationMessages = {
   },
   invalid: {
     default: "Invalid gameboard is cell miss inputs",
-  },
-};
-
-export const gameboardCoordinatesValidationMessages = {
-  valid: {
-    default: "Gameboard coordinates are valid",
-  },
-  invalid: {
-    default: "Invalid gameboard coordinates",
-    required:
-      "Gameboard coordinates are required. It cannot be null or undefined.",
-    isUndefined:
-      "Gameboard coordinates are required. It cannot be null or undefined.",
-    isNull:
-      "Gameboard coordinates are required. It cannot be null or undefined.",
-    notAnArray: "Gameboard coordinates must be an array.",
-    notAnArrayOfTwoElements:
-      "Gameboard coordinates must be an array of two elements.",
-    notAnArrayOfTwoNumbers:
-      "Gameboard coordinates must be an array of two numbers.",
-    notAnArrayOfTwoFiniteNumbers:
-      "Gameboard coordinates must be an array of two finite numbers.",
-    notAnArrayOfTwoIntegerNumbers:
-      "Gameboard coordinates must be an array of two integer numbers.",
-    outOfBounds: "Gameboard coordinates are out of bounds.",
-  },
-};
-
-export const gameboardShipValidationMessages = {
-  valid: {
-    default: "Gameboard ship is valid",
-  },
-  invalid: {
-    default: "Invalid gameboard ship",
-    required: "Gameboard ship is required. It cannot be null or undefined.",
-    isUndefined: "Gameboard ship is required. It cannot be null or undefined.",
-    isNull: "Gameboard ship is required. It cannot be null or undefined.",
-    notAnObject: "Gameboard ship must be an object.",
-    notAShipInstanceObject:
-      "Gameboard ship must be an instance of the Ship class.",
-    noIdProperty: "Gameboard ship must have an id property.",
-    noLengthProperty: "Gameboard ship must have a length property.",
-    lengthNotANumber: "Gameboard ship length must be a number.",
-    lengthNotAFiniteNumber: "Gameboard ship length must be a finite number.",
-    lengthNotAnIntegerNumber:
-      "Gameboard ship length must be an integer number.",
-    lengthIsNegativeNumber: "Gameboard ship length must be a positive number.",
-    lengthIsZero:
-      "Gameboard ship length must be a positive number. It cannot be zero.",
-    noHitsProperty: "Gameboard ship must have a hits property.",
-    hitsNotANumber: "Gameboard ship hits must be a number.",
-    hitsNotAFiniteNumber: "Gameboard ship hits must be a finite number.",
-    hitsNotAnIntegerNumber: "Gameboard ship hits must be an integer number.",
-    hitsIsNegativeNumber: "Gameboard ship hits must be a non-negative number.",
-    hitsIsGreaterThanLength:
-      "Gameboard ship hits must be less than or equal to the length.",
-    noHitMethod: "Gameboard ship must have a hit method.",
-    hitMethodNotAFunction: "Gameboard ship hit method must be a function.",
-    hitMethodReturnsNonBooleanValue:
-      "Gameboard ship hit method must return a boolean value.",
-    noIsSunkMethod: "Gameboard ship must have a isSunk method.",
-    isSunkMethodNotAFunction:
-      "Gameboard ship isSunk method must be a function.",
-    isSunkMethodReturnsNonBooleanValue:
-      "Gameboard ship isSunk method must return a boolean value.",
-  },
-};
-
-export const gameboardDirectionValidationMessages = {
-  valid: {
-    default: "Gameboard direction is valid",
-  },
-  invalid: {
-    default: "Invalid gameboard direction",
-    required:
-      "Gameboard direction is required. It cannot be null or undefined.",
-    isUndefined:
-      "Gameboard direction is required. It cannot be null or undefined.",
-    isNull: "Gameboard direction is required. It cannot be null or undefined.",
-    notAString: "Gameboard direction must be a string.",
-    notAValidDirection:
-      "Gameboard direction must be a valid direction. Valid directions are: " +
-      VALID_GAMEBOARD_DIRECTIONS.join(", "),
   },
 };
 

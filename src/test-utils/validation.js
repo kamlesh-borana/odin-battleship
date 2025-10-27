@@ -295,3 +295,18 @@ export const testIsNotAStringError = (
     expect(() => callback(1)).toThrow(errorMessagesObj.notAString);
   });
 };
+
+export const testArrayOfAtLeast1ElementError = (
+  argumentName,
+  callback,
+  errorMessagesObj
+) => {
+  testIsNotAnArrayError(argumentName, callback, errorMessagesObj);
+
+  it(`should throw an error if ${argumentName} array is empty`, () => {
+    expect(() => callback([])).toThrow(
+      errorMessagesObj.notAnArrayOfAtLeast1Element
+    );
+  });
+};
+

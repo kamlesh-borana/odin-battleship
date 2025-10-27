@@ -1,38 +1,37 @@
 import Gameboard from "..";
 import { createMethodCallback } from "../../test-utils";
-import { createMockShip } from "../test-utils";
+import { DEFAULT_OUT_OF_BOUNDS_COORDINATES } from "../../test-utils/constants";
 import {
-  CUSTOM_5X5_GAMEBOARD_OUT_OF_BOUNDS_COORDINATES,
-  CUSTOM_5X5_GAMEBOARD_VALID_SHIP_PLACEMENTS,
-  CUSTOM_5X5_GAMEBOARD_VALID_SHIP_PLACEMENTS_BOUNDARY,
-  DEFAULT_OUT_OF_BOUNDS_COORDINATES,
-  DEFAULT_VALID_SHIP_PLACEMENTS,
-  DEFAULT_VALID_SHIP_PLACEMENTS_BOUNDARY,
-} from "../test-utils/constants";
-import {
-  testCoordinatesOutOfBoundsError,
+  testGameboardCoordinatesOutOfBoundsError,
   testInvalidGameboardCoordinatesError,
   testInvalidGameboardDirectionError,
-  testInvalidGameboardShipError,
-} from "../test-utils/validation";
+} from "../../test-utils/gameboard";
+import { createMockShip, testInvalidShipError } from "../../test-utils/ship";
 import {
   DEFAULT_GAMEBOARD_DIMENSIONS,
   DIRECTIONS,
   gameboardCoordinatesValidationMessages,
   gameboardDirectionValidationMessages,
-  gameboardPlaceShipValidationMessages,
-  gameboardShipValidationMessages,
-} from "../utils/constants";
+  shipValidationMessages,
+} from "../../utils/constants";
+import {
+  CUSTOM_5X5_GAMEBOARD_OUT_OF_BOUNDS_COORDINATES,
+  CUSTOM_5X5_GAMEBOARD_VALID_SHIP_PLACEMENTS,
+  CUSTOM_5X5_GAMEBOARD_VALID_SHIP_PLACEMENTS_BOUNDARY,
+  DEFAULT_VALID_SHIP_PLACEMENTS,
+  DEFAULT_VALID_SHIP_PLACEMENTS_BOUNDARY,
+} from "../test-utils/constants";
+import { gameboardPlaceShipValidationMessages } from "../utils/constants";
 
 export function describePlaceShipTests() {
   describe("placeShip", () => {
     describe("invalid arguments", () => {
       describe("ship", () => {
         const gameboard = new Gameboard();
-        testInvalidGameboardShipError(
+        testInvalidShipError(
           "ship",
           createMethodCallback(gameboard, "placeShip"),
-          gameboardShipValidationMessages.invalid
+          shipValidationMessages.invalid
         );
       });
 
@@ -190,7 +189,7 @@ export function describePlaceShipTests() {
         ])("%s", (_, dimensions, coordinatesList) => {
           const gameboard = new Gameboard(dimensions);
           const ship = createMockShip(1);
-          testCoordinatesOutOfBoundsError(
+          testGameboardCoordinatesOutOfBoundsError(
             "coordinates",
             createMethodCallback(gameboard, "placeShip", [ship]),
             gameboardCoordinatesValidationMessages.invalid,

@@ -1,13 +1,13 @@
 import Gameboard from "..";
 import { createMethodCallback } from "../../test-utils";
-import { createMockShip } from "../test-utils";
-import { DEFAULT_OUT_OF_BOUNDS_COORDINATES } from "../test-utils/constants";
-import { testInvalidGameboardCoordinatesError } from "../test-utils/validation";
+import { DEFAULT_OUT_OF_BOUNDS_COORDINATES } from "../../test-utils/constants";
+import { testInvalidGameboardCoordinatesError } from "../../test-utils/gameboard";
+import { createMockShip } from "../../test-utils/ship";
 import {
   DIRECTIONS,
   gameboardCoordinatesValidationMessages,
-  gameboardReceiveAttackValidationMessages,
-} from "../utils/constants";
+} from "../../utils/constants";
+import { gameboardReceiveAttackValidationMessages } from "../utils/constants";
 
 export function describeReceiveAttackTests() {
   describe("receiveAttack", () => {

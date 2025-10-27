@@ -54,10 +54,21 @@ export const isString = (value) => {
   return typeof value === "string";
 };
 
+export const hasProperty = (object, propertyName) => {
+  return Object.hasOwn(object, propertyName);
+};
+
 export const createValidationResult = (isValid, message) => {
   return { isValid, message };
 };
 
 export const createUniqueId = () => {
   return crypto.randomUUID();
+};
+
+export const createGameboardBoard = (dimensions) => {
+  const [rows, columns] = dimensions;
+  return Array.from({ length: rows }, () =>
+    Array.from({ length: columns }, () => ({ hit: false, ship: null }))
+  );
 };
