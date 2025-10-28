@@ -296,7 +296,7 @@ export const testIsNotAStringError = (
   });
 };
 
-export const testArrayOfAtLeast1ElementError = (
+export const testIsNotAnArrayOfAtLeast1ElementError = (
   argumentName,
   callback,
   errorMessagesObj
@@ -310,3 +310,24 @@ export const testArrayOfAtLeast1ElementError = (
   });
 };
 
+export const testIsNotAnArrayOfAtLeast2ElementsError = (
+  argumentName,
+  callback,
+  errorMessagesObj
+) => {
+  testIsNotAnArrayError(argumentName, callback, errorMessagesObj);
+
+  it.each([
+    ["array is empty", [], errorMessagesObj.notAnArrayOfAtLeast2Elements],
+    [
+      "array length is less than 2",
+      [1],
+      errorMessagesObj.notAnArrayOfAtLeast2Elements,
+    ],
+  ])(
+    `should throw an error if ${argumentName} %s`,
+    (_, value, errorMessage) => {
+      expect(() => callback(value)).toThrow(errorMessage);
+    }
+  );
+};

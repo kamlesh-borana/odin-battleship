@@ -1,4 +1,13 @@
+import { createUniqueId } from "../utils";
 import { testIsNotAStringError } from "./validation";
+
+export const createMockPlayer = (type, options = {}) => {
+  const { id = createUniqueId() } = options;
+  return {
+    id,
+    type,
+  };
+};
 
 export const testInvalidPlayerTypeError = (
   argumentName,

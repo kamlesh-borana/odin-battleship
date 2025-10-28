@@ -296,3 +296,22 @@ export const validateIsArrayOfAtLeast1Elements = (
 
   return createValidationResult(true, validationMessagesObj.valid.default);
 };
+
+export const validateIsArrayOfAtLeast2Elements = (
+  value,
+  validationMessagesObj
+) => {
+  const isArrayValidationResult = validateIsArray(value, validationMessagesObj);
+  if (!isArrayValidationResult.isValid) {
+    return isArrayValidationResult;
+  }
+
+  if (value.length < 2) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.notAnArrayOfAtLeast2Elements
+    );
+  }
+
+  return createValidationResult(true, validationMessagesObj.valid.default);
+};
