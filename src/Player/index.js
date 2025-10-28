@@ -1,4 +1,5 @@
-import { validatePlayerInputs } from "./utils";
+import { createUniqueId } from "../utils";
+import { validatePlayerInputs } from "./utils/validation";
 
 class Player {
   #id;
@@ -11,7 +12,7 @@ class Player {
       throw new Error(validationResult.message);
     }
 
-    this.#id = crypto.randomUUID();
+    this.#id = createUniqueId();
     this.#type = type;
     this.#gameboard = gameboard;
   }

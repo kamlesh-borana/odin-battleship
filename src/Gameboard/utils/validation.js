@@ -2,17 +2,17 @@ import { createValidationResult } from "../../utils";
 import {
   DIRECTIONS,
   gameboardCoordinatesValidationMessages,
+  gameboardDimensionsValidationMessages,
   gameboardDirectionValidationMessages,
   shipValidationMessages,
 } from "../../utils/constants";
 import {
   validateGameboardCoordinates,
+  validateGameboardDimensions,
   validateGameboardDirection,
 } from "../../utils/gameboard";
 import { validateShip } from "../../utils/ship";
-import { validateIsArrayOfTwoPositiveIntegerNumbers } from "../../utils/validation";
 import {
-  gameboardDimensionsValidationMessages,
   gameboardGetShipAtValidationMessages,
   gameboardInputsValidationMessages,
   gameboardIsCellHitValidationMessages,
@@ -20,17 +20,6 @@ import {
   gameboardPlaceShipValidationMessages,
   gameboardReceiveAttackValidationMessages,
 } from "./constants";
-
-const validateGameboardDimensions = (
-  dimensions,
-  validationMessagesObj = gameboardDimensionsValidationMessages
-) => {
-  const validationResult = validateIsArrayOfTwoPositiveIntegerNumbers(
-    dimensions,
-    validationMessagesObj
-  );
-  return validationResult;
-};
 
 export const validateGameboardInputs = (dimensions) => {
   const gameboardDimensionsValidationResult = validateGameboardDimensions(

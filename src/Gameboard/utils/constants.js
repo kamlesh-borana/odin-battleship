@@ -7,31 +7,6 @@ export const gameboardInputsValidationMessages = {
   },
 };
 
-export const gameboardDimensionsValidationMessages = {
-  valid: {
-    default: "Gameboard dimensions are valid",
-  },
-  invalid: {
-    default: "Invalid gameboard dimensions",
-    required:
-      "Gameboard dimensions are required. It cannot be null or undefined.",
-    isUndefined:
-      "Gameboard dimensions are required. It cannot be null or undefined.",
-    isNull: "Gameboard dimensions must be an array. It cannot be null.",
-    notAnArray: "Gameboard dimensions must be an array.",
-    notAnArrayOfTwoElements:
-      "Gameboard dimensions must be an array of two elements.",
-    notAnArrayOfTwoNumbers:
-      "Gameboard dimensions must be an array of two numbers.",
-    notAnArrayOfTwoFiniteNumbers:
-      "Gameboard dimensions must be an array of two finite numbers.",
-    notAnArrayOfTwoIntegerNumbers:
-      "Gameboard dimensions must be an array of two integer numbers.",
-    notAnArrayOfTwoPositiveIntegerNumbers:
-      "Gameboard dimensions must be an array of two positive integer numbers (Greater than zero).",
-  },
-};
-
 export const gameboardGetShipAtValidationMessages = {
   valid: {
     default: "Gameboard get ship at inputs are valid",

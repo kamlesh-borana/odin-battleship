@@ -1,8 +1,10 @@
 import Gameboard from "..";
 import { createConstructorCallback } from "../../test-utils";
-import { DEFAULT_GAMEBOARD_DIMENSIONS } from "../../utils/constants";
-import { testInvalidGameboardDimensionsError } from "../test-utils/validation";
-import { gameboardDimensionsValidationMessages } from "../utils/constants";
+import { testInvalidGameboardDimensionsError } from "../../test-utils/gameboard";
+import {
+  DEFAULT_GAMEBOARD_DIMENSIONS,
+  gameboardDimensionsValidationMessages,
+} from "../../utils/constants";
 import { describeAllShipsSunkTests } from "./gameboard.allShipsSunk.helper";
 import { describeGetShipAtTests } from "./gameboard.getShipAt.helper";
 import { describeIsCellHitTests } from "./gameboard.isCellHit.helper";
