@@ -158,3 +158,41 @@ export const gameboardValidationMessages = {
   },
   gameboardDimensions: gameboardDimensionsValidationMessages,
 };
+
+export const shipsValidationMessages = {
+  valid: {
+    default: "Ships are valid",
+    ship: shipValidationMessages.valid,
+    gameboardCoordinates: gameboardCoordinatesValidationMessages.valid,
+    gameboardDirection: gameboardDirectionValidationMessages.valid,
+  },
+  invalid: {
+    default: "Invalid ships",
+    required: "Ships are required. It cannot be null or undefined.",
+    isUndefined: "Ships are required. It cannot be null or undefined.",
+    isNull: "Ships are required. It cannot be null or undefined.",
+    notAnArray: "Ships must be an array.",
+    notAnArrayOfAtLeast1Element:
+      "Ships must be an array of at least 1 element.",
+    notAnArrayOfObjects: "Ships must be an array of objects.",
+    noShipPropertyInObject: "Ships array objects must have a ship property.",
+    noCoordinatesPropertyInObject:
+      "Ships array objects must have a coordinates property.",
+    noDirectionPropertyInObject:
+      "Ships array objects must have a direction property.",
+    notAnArrayOfShipPlacementInfoObjects:
+      "Ships must be an array of ship placement information objects.",
+    noShipPropertyInShipPlacementInfoObject:
+      "Ships must have a ship property in their ship placement information objects.",
+    noCoordinatesPropertyInShipPlacementInfoObject:
+      "Ships must have a coordinates property in their ship placement information objects.",
+    noDirectionPropertyInShipPlacementInfoObject:
+      "Ships must have a direction property in their ship placement information objects.",
+    ship: shipValidationMessages.invalid,
+    gameboardCoordinates: gameboardCoordinatesValidationMessages.invalid,
+    gameboardDirection: gameboardDirectionValidationMessages.invalid,
+  },
+  ship: shipValidationMessages,
+  gameboardCoordinates: gameboardCoordinatesValidationMessages,
+  gameboardDirection: gameboardDirectionValidationMessages,
+};

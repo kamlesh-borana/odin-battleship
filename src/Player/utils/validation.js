@@ -1,11 +1,21 @@
 import { createValidationResult } from "../../utils";
 import {
+  gameboardCoordinatesValidationMessages,
   gameboardValidationMessages,
   playerTypeValidationMessages,
+  shipsValidationMessages,
 } from "../../utils/constants";
-import { validateGameboard } from "../../utils/gameboard";
+import { validateShips } from "../../utils/game";
+import {
+  validateGameboard,
+  validateGameboardCoordinates,
+} from "../../utils/gameboard";
 import { validatePlayerType } from "../../utils/player";
-import { playerInputsValidationMessages } from "./constants";
+import {
+  playerAddShipsInputsValidationMessages,
+  playerGetShipAtInputsValidationMessages,
+  playerInputsValidationMessages,
+} from "./constants";
 
 export const validatePlayerInputs = (type, gameboard) => {
   const playerTypeValidationResult = validatePlayerType(
@@ -27,5 +37,37 @@ export const validatePlayerInputs = (type, gameboard) => {
   return createValidationResult(
     true,
     playerInputsValidationMessages.valid.default
+  );
+};
+
+export const validateGetShipAtInputs = (coordinates, dimensions) => {
+  const gameboardCoordinatesValidationResult = validateGameboardCoordinates(
+    coordinates,
+    dimensions,
+    gameboardCoordinatesValidationMessages
+  );
+  if (!gameboardCoordinatesValidationResult.isValid) {
+    return gameboardCoordinatesValidationResult;
+  }
+
+  return createValidationResult(
+    true,
+    playerGetShipAtInputsValidationMessages.valid.default
+  );
+};
+
+export const validateAddShipsInputs = (ships, dimensions) => {
+  const shipsValidationResult = validateShips(
+    ships,
+    dimensions,
+    shipsValidationMessages
+  );
+  if (!shipsValidationResult.isValid) {
+    return shipsValidationResult;
+  }
+
+  return createValidationResult(
+    true,
+    playerAddShipsInputsValidationMessages.valid.default
   );
 };

@@ -6,6 +6,7 @@ import {
   gameboardDimensionsValidationMessages,
 } from "../../utils/constants";
 import { describeAllShipsSunkTests } from "./gameboard.allShipsSunk.helper";
+import { describeGetBoardTests } from "./gameboard.getBoard.helper";
 import { describeGetShipAtTests } from "./gameboard.getShipAt.helper";
 import { describeIsCellHitTests } from "./gameboard.isCellHit.helper";
 import { describeIsCellMissTests } from "./gameboard.isCellMiss.helper";
@@ -85,6 +86,9 @@ describe("Gameboard class module", () => {
 
       // Run all ships sunk tests
       describeAllShipsSunkTests();
+
+      // Run get board tests
+      describeGetBoardTests();
     });
   });
 });

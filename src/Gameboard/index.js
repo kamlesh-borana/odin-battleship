@@ -128,6 +128,21 @@ class Gameboard {
   allShipsSunk() {
     return this.#ships.every((ship) => ship.isSunk());
   }
+
+  getBoard() {
+    const board = this.#board.map((row) =>
+      row.map((cell) => ({
+        hit: cell.hit,
+        ship: cell.ship
+          ? {
+              id: cell.ship.id,
+              length: cell.ship.length,
+            }
+          : null,
+      }))
+    );
+    return board;
+  }
 }
 
 export default Gameboard;

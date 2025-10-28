@@ -1,5 +1,9 @@
 import { createUniqueId } from "../utils";
-import { validatePlayerInputs } from "./utils/validation";
+import {
+  validateAddShipsInputs,
+  validateGetShipAtInputs,
+  validatePlayerInputs,
+} from "./utils/validation";
 
 class Player {
   #id;
@@ -23,6 +27,37 @@ class Player {
 
   get type() {
     return this.#type;
+  }
+
+  getShipAt(coordinates) {
+    const validationResult = validateGetShipAtInputs(
+      coordinates,
+      this.#gameboard.dimensions
+    );
+    if (!validationResult.isValid) {
+      throw new Error(validationResult.message);
+    }
+
+    return this.#gameboard.getShipAt(coordinates);
+  }
+
+  addShips(ships) {
+    const validationResult = validateAddShipsInputs(
+      ships,
+      this.#gameboard.dimensions
+    );
+    if (!validationResult.isValid) {
+      throw new Error(validationResult.message);
+    }
+
+    for (const shipInfo of ships) {
+      const { ship, coordinates, direction } = shipInfo;
+      this.#gameboard.placeShip(ship, coordinates, direction);
+    }
+  }
+
+  getBoard() {
+    return this.#gameboard.getBoard();
   }
 }
 

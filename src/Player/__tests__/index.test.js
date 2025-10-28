@@ -10,6 +10,9 @@ import {
   PLAYER_TYPES,
   playerTypeValidationMessages,
 } from "../../utils/constants";
+import { describeAddShipsTests } from "./player.addShips.helper";
+import { describeGetBoardTests } from "./player.getBoard.helper";
+import { describeGetShipAtTests } from "./player.getShipAt.helper";
 
 describe("Player class module", () => {
   describe("constructor", () => {
@@ -72,6 +75,17 @@ describe("Player class module", () => {
             expect(player2.type).toBe(PLAYER_TYPES.COMPUTER);
           });
         });
+      });
+
+      describe("methods", () => {
+        // Run get ship at tests
+        describeGetShipAtTests();
+
+        // Run add ships tests
+        describeAddShipsTests();
+
+        // Run get board tests
+        describeGetBoardTests();
       });
     });
   });
