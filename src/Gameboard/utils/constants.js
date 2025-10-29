@@ -25,12 +25,12 @@ export const gameboardIsCellHitValidationMessages = {
   },
 };
 
-export const gameboardIsCellMissValidationMessages = {
+export const gameboardIsCellMissHitValidationMessages = {
   valid: {
-    default: "Gameboard is cell miss inputs are valid",
+    default: "Gameboard is cell miss hit inputs are valid",
   },
   invalid: {
-    default: "Invalid gameboard is cell miss inputs",
+    default: "Invalid gameboard is cell miss hit inputs",
   },
 };
 
@@ -43,7 +43,8 @@ export const gameboardPlaceShipValidationMessages = {
     alreadyOccupied: "Cannot place ship on a cell that is already occupied.",
     overlapsWithAnotherShip:
       "Cannot place ship that overlaps with another ship.",
-    outOfBounds: "Cannot place ship that is out of bounds.",
+    outOfBounds:
+      "Cannot place ship that doesn't fit within the gameboard boundaries.",
   },
 };
 

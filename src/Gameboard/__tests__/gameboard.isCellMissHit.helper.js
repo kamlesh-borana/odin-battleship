@@ -8,8 +8,8 @@ import {
   gameboardCoordinatesValidationMessages,
 } from "../../utils/constants";
 
-export function describeIsCellMissTests() {
-  describe("isCellMiss", () => {
+export function describeIsCellMissHitTests() {
+  describe("isCellMissHit", () => {
     describe("invalid arguments", () => {
       describe("coordinates", () => {
         const gameboard = new Gameboard();
@@ -19,7 +19,7 @@ export function describeIsCellMissTests() {
         };
         testInvalidGameboardCoordinatesError(
           "coordinates",
-          createMethodCallback(gameboard, "isCellMiss"),
+          createMethodCallback(gameboard, "isCellMissHit"),
           gameboardCoordinatesValidationMessages.invalid,
           options
         );
@@ -34,7 +34,7 @@ export function describeIsCellMissTests() {
         gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
         gameboard.receiveAttack([0, 0]);
 
-        expect(gameboard.isCellMiss([0, 0])).toBe(false);
+        expect(gameboard.isCellMissHit([0, 0])).toBe(false);
       });
 
       it("should return true if an empty cell is hit", () => {
@@ -44,7 +44,7 @@ export function describeIsCellMissTests() {
         gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
         gameboard.receiveAttack([1, 1]);
 
-        expect(gameboard.isCellMiss([1, 1])).toBe(true);
+        expect(gameboard.isCellMissHit([1, 1])).toBe(true);
       });
 
       it("should return false if the cell containing a ship is not hit", () => {
@@ -54,7 +54,7 @@ export function describeIsCellMissTests() {
         gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
         gameboard.receiveAttack([1, 1]);
 
-        expect(gameboard.isCellMiss([0, 0])).toBe(false);
+        expect(gameboard.isCellMissHit([0, 0])).toBe(false);
       });
 
       it("should return false if an empty cell is not hit", () => {
@@ -64,12 +64,12 @@ export function describeIsCellMissTests() {
         gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
         gameboard.receiveAttack([0, 0]);
 
-        expect(gameboard.isCellMiss([1, 1])).toBe(false);
+        expect(gameboard.isCellMissHit([1, 1])).toBe(false);
       });
 
       it("should return false if the gameboard has no ships placed", () => {
         const gameboard = new Gameboard();
-        expect(gameboard.isCellMiss([0, 0])).toBe(false);
+        expect(gameboard.isCellMissHit([0, 0])).toBe(false);
       });
 
       it("should return false if the gameboard has ships placed but no cells are hit", () => {
@@ -78,8 +78,8 @@ export function describeIsCellMissTests() {
 
         gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
 
-        expect(gameboard.isCellMiss([0, 0])).toBe(false); // Ship cell
-        expect(gameboard.isCellMiss([1, 1])).toBe(false); // Empty cell
+        expect(gameboard.isCellMissHit([0, 0])).toBe(false); // Ship cell
+        expect(gameboard.isCellMissHit([1, 1])).toBe(false); // Empty cell
       });
     });
   });

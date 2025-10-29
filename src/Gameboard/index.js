@@ -4,7 +4,7 @@ import {
   validateGameboardInputs,
   validateGetShipAtInputs,
   validateIsCellHitInputs,
-  validateIsCellMissInputs,
+  validateIsCellMissHitInputs,
   validatePlaceShipInputs,
   validateReceiveAttackInputs,
 } from "./utils/validation";
@@ -65,8 +65,8 @@ class Gameboard {
     return this.#board[row][column].hit;
   }
 
-  isCellMiss(coordinates) {
-    const validationResult = validateIsCellMissInputs(
+  isCellMissHit(coordinates) {
+    const validationResult = validateIsCellMissHitInputs(
       coordinates,
       this.#dimensions
     );

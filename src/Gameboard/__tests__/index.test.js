@@ -9,7 +9,7 @@ import { describeAllShipsSunkTests } from "./gameboard.allShipsSunk.helper";
 import { describeGetBoardTests } from "./gameboard.getBoard.helper";
 import { describeGetShipAtTests } from "./gameboard.getShipAt.helper";
 import { describeIsCellHitTests } from "./gameboard.isCellHit.helper";
-import { describeIsCellMissTests } from "./gameboard.isCellMiss.helper";
+import { describeIsCellMissHitTests } from "./gameboard.isCellMissHit.helper";
 import { describePlaceShipTests } from "./gameboard.placeShip.helper";
 import { describeReceiveAttackTests } from "./gameboard.receiveAttack.helper";
 
@@ -75,8 +75,8 @@ describe("Gameboard class module", () => {
       // Run is cell hit tests
       describeIsCellHitTests();
 
-      // Run is cell miss tests
-      describeIsCellMissTests();
+      // Run is cell miss hit tests
+      describeIsCellMissHitTests();
 
       // Run place ship tests
       describePlaceShipTests();

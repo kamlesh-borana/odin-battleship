@@ -16,7 +16,7 @@ import {
   gameboardGetShipAtValidationMessages,
   gameboardInputsValidationMessages,
   gameboardIsCellHitValidationMessages,
-  gameboardIsCellMissValidationMessages,
+  gameboardIsCellMissHitValidationMessages,
   gameboardPlaceShipValidationMessages,
   gameboardReceiveAttackValidationMessages,
 } from "./constants";
@@ -68,7 +68,7 @@ export const validateIsCellHitInputs = (coordinates, dimensions) => {
   );
 };
 
-export const validateIsCellMissInputs = (coordinates, dimensions) => {
+export const validateIsCellMissHitInputs = (coordinates, dimensions) => {
   const gameboardCoordinatesValidationResult = validateGameboardCoordinates(
     coordinates,
     dimensions,
@@ -80,7 +80,7 @@ export const validateIsCellMissInputs = (coordinates, dimensions) => {
 
   return createValidationResult(
     true,
-    gameboardIsCellMissValidationMessages.valid.default
+    gameboardIsCellMissHitValidationMessages.valid.default
   );
 };
 

@@ -45,7 +45,7 @@ export function describeReceiveAttackTests() {
         gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
         gameboard.receiveAttack([1, 1]);
 
-        expect(gameboard.isCellMiss([1, 1])).toBe(true);
+        expect(gameboard.isCellMissHit([1, 1])).toBe(true);
       });
 
       it("should call the hit() method of the ship when receiving an attack on a cell containing a ship", () => {
