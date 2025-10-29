@@ -48,6 +48,16 @@ class Ship {
   isSunk() {
     return this.#hits >= this.#length;
   }
+
+  getInfo() {
+    return {
+      id: this.#id,
+      name: this.#name,
+      length: this.#length,
+      hits: this.#hits,
+      isSunk: this.isSunk(),
+    };
+  }
 }
 
 export default Ship;

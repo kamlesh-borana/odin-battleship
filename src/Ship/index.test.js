@@ -209,6 +209,19 @@ describe("Ship class module", () => {
           }
         );
       });
+
+      describe("getInfo", () => {
+        it("should return the info of the ship", () => {
+          const ship = new Ship(3);
+          expect(ship.getInfo()).toStrictEqual({
+            id: ship.id,
+            name: ship.name,
+            length: ship.length,
+            hits: ship.hits,
+            isSunk: ship.isSunk(),
+          });
+        });
+      });
     });
   });
 });
