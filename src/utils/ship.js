@@ -2,10 +2,12 @@ import { createValidationResult, hasProperty, isFunction } from ".";
 import {
   shipHitsValidationMessages,
   shipLengthValidationMessages,
+  shipNameValidationMessages,
   shipValidationMessages,
 } from "./constants";
 import {
   validateIsNotANegativeIntegerNumber,
+  validateIsNotAnEmptyString,
   validateIsObject,
   validateIsPositiveIntegerNumber,
 } from "./validation";
@@ -16,6 +18,17 @@ export const validateShipLength = (
 ) => {
   const validationResult = validateIsPositiveIntegerNumber(
     length,
+    validationMessagesObj
+  );
+  return validationResult;
+};
+
+export const validateShipName = (
+  name,
+  validationMessagesObj = shipNameValidationMessages
+) => {
+  const validationResult = validateIsNotAnEmptyString(
+    name,
     validationMessagesObj
   );
   return validationResult;

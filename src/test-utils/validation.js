@@ -287,13 +287,37 @@ export const testIsNotAnObjectError = (
 export const testIsNotAStringError = (
   argumentName,
   callback,
-  errorMessagesObj
+  errorMessagesObj,
+  isOptional = false
 ) => {
-  testHasNoValueError(argumentName, callback, errorMessagesObj);
+  testHasNoValueError(argumentName, callback, errorMessagesObj, isOptional);
 
   it(`should throw an error if ${argumentName} is not a string`, () => {
     expect(() => callback(1)).toThrow(errorMessagesObj.notAString);
   });
+};
+
+export const testIsAnEmptyStringError = (
+  argumentName,
+  callback,
+  errorMessagesObj,
+  isOptional = false
+) => {
+  testIsNotAStringError(argumentName, callback, errorMessagesObj, isOptional);
+
+  it.each([
+    ["an empty string", "", errorMessagesObj.isEmptyString],
+    [
+      "a string with only whitespace characters",
+      "  \t\n\r\f\v",
+      errorMessagesObj.isEmptyString,
+    ],
+  ])(
+    `should throw an error if ${argumentName} is %s`,
+    (_, value, errorMessage) => {
+      expect(() => callback(value)).toThrow(errorMessage);
+    }
+  );
 };
 
 export const testIsNotAnArrayOfAtLeast1ElementError = (

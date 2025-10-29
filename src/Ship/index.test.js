@@ -1,7 +1,14 @@
 import Ship from ".";
 import { createConstructorCallback } from "../test-utils";
-import { testInvalidShipLengthError } from "../test-utils/ship";
-import { shipLengthValidationMessages } from "../utils/constants";
+import {
+  testInvalidShipLengthError,
+  testInvalidShipNameError,
+} from "../test-utils/ship";
+import {
+  SHIP_NAMES,
+  shipLengthValidationMessages,
+  shipNameValidationMessages,
+} from "../utils/constants";
 
 describe("Ship class module", () => {
   describe("constructor", () => {
@@ -13,10 +20,24 @@ describe("Ship class module", () => {
           shipLengthValidationMessages.invalid
         );
       });
+
+      describe("name", () => {
+        const isOptional = true;
+        testInvalidShipNameError(
+          "name",
+          createConstructorCallback(Ship, [3]),
+          shipNameValidationMessages.invalid,
+          isOptional
+        );
+      });
     });
 
     describe("valid arguments", () => {
-      it("should create a ship instance if length is a positive integer number", () => {
+      it("should create a ship instance if a valid length and name arguments are provided", () => {
+        expect(new Ship(4, SHIP_NAMES.BATTLESHIP)).toBeInstanceOf(Ship);
+      });
+
+      it("should create a ship instance if only a valid length argument is provided", () => {
         expect(new Ship(3)).toBeInstanceOf(Ship);
       });
     });
@@ -41,6 +62,23 @@ describe("Ship class module", () => {
         it("should return the length of the ship passed to the constructor", () => {
           const ship = new Ship(3);
           expect(ship.length).toBe(3);
+        });
+      });
+
+      describe("name", () => {
+        it("should return the name of the ship passed to the constructor", () => {
+          const ship = new Ship(4, SHIP_NAMES.BATTLESHIP);
+          expect(ship.name).toBe(SHIP_NAMES.BATTLESHIP);
+        });
+
+        it("should return the default name if no name argument is provided", () => {
+          const ship = new Ship(3);
+          expect(ship.name).toBe(SHIP_NAMES.DEFAULT);
+        });
+
+        it("should return the name of the ship passed to the constructor with leading and trailing whitespace characters removed", () => {
+          const ship = new Ship(3, " \t\n\r\f\vCustom Ship Name\t\n\r\f\v ");
+          expect(ship.name).toBe("Custom Ship Name");
         });
       });
 

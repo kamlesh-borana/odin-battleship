@@ -1,3 +1,13 @@
+export const SHIP_NAMES = {
+  AIRCRAFT_CARRIER: "Aircraft Carrier",
+  BATTLESHIP: "Battleship",
+  CRUISER: "Cruiser",
+  DESTROYER: "Destroyer",
+  SUBMARINE: "Submarine",
+  PATROL_BOAT: "Patrol Boat",
+  DEFAULT: "Ship",
+};
+
 export const DEFAULT_GAMEBOARD_DIMENSIONS = [10, 10];
 
 export const DIRECTIONS = {
@@ -54,6 +64,20 @@ export const shipLengthValidationMessages = {
     notAnIntegerNumber: "Ship length must be an integer number.",
     isNegativeNumber: "Ship length must be a positive number.",
     isZero: "Ship length must be a positive number. It cannot be zero.",
+  },
+};
+
+export const shipNameValidationMessages = {
+  valid: {
+    default: "Ship name is valid",
+  },
+  invalid: {
+    default: "Invalid ship name",
+    required: "Ship name is required. It cannot be null or undefined.",
+    isUndefined: "Ship name is required. It cannot be null or undefined.",
+    isNull: "Ship name is required. It cannot be null or undefined.",
+    notAString: "Ship name must be a string.",
+    isEmptyString: "Ship name cannot be an empty string.",
   },
 };
 

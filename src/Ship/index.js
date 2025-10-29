@@ -1,19 +1,22 @@
 import { createUniqueId } from "../utils";
+import { SHIP_NAMES } from "../utils/constants";
 import { validateShipInputs } from "./utils/validation";
 
 class Ship {
   #id;
   #length;
+  #name;
   #hits;
 
-  constructor(length) {
-    const validationResult = validateShipInputs(length);
+  constructor(length, name = SHIP_NAMES.DEFAULT) {
+    const validationResult = validateShipInputs(length, name);
     if (!validationResult.isValid) {
       throw new Error(validationResult.message);
     }
 
     this.#id = createUniqueId();
     this.#length = length;
+    this.#name = name.trim(); // Remove leading and trailing whitespace
     this.#hits = 0;
   }
 
@@ -23,6 +26,10 @@ class Ship {
 
   get length() {
     return this.#length;
+  }
+
+  get name() {
+    return this.#name;
   }
 
   get hits() {

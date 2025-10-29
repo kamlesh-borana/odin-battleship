@@ -1,6 +1,7 @@
 import {
   createValidationResult,
   isArray,
+  isEmptyString,
   isFiniteNumber,
   isIntegerNumber,
   isNegativeNumber,
@@ -272,6 +273,25 @@ export const validateIsString = (value, validationMessagesObj) => {
     return createValidationResult(
       false,
       validationMessagesObj.invalid.notAString
+    );
+  }
+
+  return createValidationResult(true, validationMessagesObj.valid.default);
+};
+
+export const validateIsNotAnEmptyString = (value, validationMessagesObj) => {
+  const isStringValidationResult = validateIsString(
+    value,
+    validationMessagesObj
+  );
+  if (!isStringValidationResult.isValid) {
+    return isStringValidationResult;
+  }
+
+  if (isEmptyString(value)) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.isEmptyString
     );
   }
 

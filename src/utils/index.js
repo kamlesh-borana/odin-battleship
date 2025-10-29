@@ -54,6 +54,10 @@ export const isString = (value) => {
   return typeof value === "string";
 };
 
+export const isEmptyString = (value) => {
+  return isString(value) && value.trim() === "";
+};
+
 export const hasProperty = (object, propertyName) => {
   return Object.hasOwn(object, propertyName);
 };

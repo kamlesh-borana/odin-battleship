@@ -1,5 +1,6 @@
 import { createUniqueId } from "../utils";
 import {
+  testIsAnEmptyStringError,
   testIsNegativeIntegerNumberError,
   testIsNotAnObjectError,
   testIsNotAPositiveIntegerNumberError,
@@ -30,6 +31,20 @@ export const testInvalidShipLengthError = (
     argumentName,
     callback,
     errorMessagesObj
+  );
+};
+
+export const testInvalidShipNameError = (
+  argumentName,
+  callback,
+  errorMessagesObj,
+  isOptional = false
+) => {
+  testIsAnEmptyStringError(
+    argumentName,
+    callback,
+    errorMessagesObj,
+    isOptional
   );
 };
 
