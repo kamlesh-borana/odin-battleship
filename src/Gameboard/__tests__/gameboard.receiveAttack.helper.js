@@ -57,6 +57,37 @@ export function describeReceiveAttackTests() {
 
         expect(ship.hit).toHaveBeenCalledTimes(1);
       });
+
+      it("should return true when receiving an attack on a cell containing a ship", () => {
+        const gameboard = new Gameboard();
+        const ship = createMockShip(1);
+
+        gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
+
+        expect(gameboard.receiveAttack([0, 0])).toBe(true);
+      });
+
+      it("should return true when receiving an attack on a cell not containing a ship", () => {
+        const gameboard = new Gameboard();
+        const ship = createMockShip(1);
+
+        gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
+
+        expect(gameboard.receiveAttack([1, 1])).toBe(true);
+      });
+
+      it("should return false when the hit() method of the ship returns false", () => {
+        const gameboard = new Gameboard();
+        const ship = createMockShip(1);
+
+        gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
+
+        // Mock the hit() method of the ship to return false
+        ship.hit.mockReturnValue(false);
+
+        // The attack is successful but the ship is not hit
+        expect(gameboard.receiveAttack([0, 0])).toBe(false);
+      });
     });
 
     describe("edge cases", () => {

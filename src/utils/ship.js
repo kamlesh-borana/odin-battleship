@@ -89,6 +89,21 @@ export const validateShip = (
     return lengthValidationResult;
   }
 
+  if (!hasProperty(ship, "name")) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.noNameProperty
+    );
+  }
+
+  const nameValidationResult = validateShipName(
+    ship.name,
+    validationMessagesObj.name
+  );
+  if (!nameValidationResult.isValid) {
+    return nameValidationResult;
+  }
+
   if (!hasProperty(ship, "hits")) {
     return createValidationResult(
       false,
@@ -130,6 +145,20 @@ export const validateShip = (
     return createValidationResult(
       false,
       validationMessagesObj.invalid.isSunkMethodNotAFunction
+    );
+  }
+
+  if (!hasProperty(ship, "getInfo")) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.noGetInfoMethod
+    );
+  }
+
+  if (!isFunction(ship.getInfo)) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.getInfoMethodNotAFunction
     );
   }
 

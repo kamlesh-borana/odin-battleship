@@ -27,13 +27,13 @@ export function describeGetShipAtTests() {
     });
 
     describe("valid arguments", () => {
-      it("should return the ship if there is a ship at the given coordinates", () => {
+      it("should return the ship info if there is a ship at the given coordinates", () => {
         const gameboard = new Gameboard();
         const ship = createMockShip(1);
 
         gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
 
-        expect(gameboard.getShipAt([0, 0])).toBe(ship);
+        expect(gameboard.getShipAt([0, 0])).toStrictEqual(ship.getInfo());
       });
 
       it("should return null if there is no ship at the given coordinates", () => {

@@ -46,15 +46,9 @@ export const addShipToExpectedBoard = (
   const [row, column] = coordinates;
   for (let i = 0; i < ship.length; i++) {
     if (direction === DIRECTIONS.HORIZONTAL) {
-      expectedBoard[row][column + i] = {
-        hit: false,
-        ship: { id: ship.id, length: ship.length },
-      };
+      expectedBoard[row][column + i].ship = { ...ship.getInfo() };
     } else if (direction === DIRECTIONS.VERTICAL) {
-      expectedBoard[row + i][column] = {
-        hit: false,
-        ship: { id: ship.id, length: ship.length },
-      };
+      expectedBoard[row + i][column].ship = { ...ship.getInfo() };
     }
   }
 };

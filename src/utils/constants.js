@@ -103,6 +103,7 @@ export const shipValidationMessages = {
   valid: {
     default: "Ship is valid",
     length: shipLengthValidationMessages.valid,
+    name: shipNameValidationMessages.valid,
     hits: shipHitsValidationMessages.valid,
   },
   invalid: {
@@ -114,14 +115,19 @@ export const shipValidationMessages = {
     noIdProperty: "Ship must have an id property.",
     noLengthProperty: "Ship must have a length property.",
     length: shipLengthValidationMessages.invalid,
+    noNameProperty: "Ship must have a name property.",
+    name: shipNameValidationMessages.invalid,
     noHitsProperty: "Ship must have a hits property.",
     hits: shipHitsValidationMessages.invalid,
     noHitMethod: "Ship must have a hit method.",
     hitMethodNotAFunction: "Ship's hit method must be a function.",
     noIsSunkMethod: "Ship must have an isSunk method.",
     isSunkMethodNotAFunction: "Ship's isSunk method must be a function.",
+    noGetInfoMethod: "Ship must have a getInfo method.",
+    getInfoMethodNotAFunction: "Ship's getInfo method must be a function.",
   },
   length: shipLengthValidationMessages,
+  name: shipNameValidationMessages,
   hits: shipHitsValidationMessages,
 };
 

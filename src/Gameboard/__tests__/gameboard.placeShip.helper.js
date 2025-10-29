@@ -67,7 +67,7 @@ export function describePlaceShipTests() {
 
         gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
 
-        expect(gameboard.getShipAt([0, 0])).toBe(ship);
+        expect(gameboard.getShipAt([0, 0])).toStrictEqual(ship.getInfo());
       });
 
       it("should place the single length ship at the given coordinates in the vertical direction on the gameboard", () => {
@@ -76,7 +76,7 @@ export function describePlaceShipTests() {
 
         gameboard.placeShip(ship, [0, 0], DIRECTIONS.VERTICAL);
 
-        expect(gameboard.getShipAt([0, 0])).toBe(ship);
+        expect(gameboard.getShipAt([0, 0])).toStrictEqual(ship.getInfo());
       });
 
       it("should place the multiple length ship at the given coordinates in the horizontal direction on the gameboard", () => {
@@ -86,8 +86,8 @@ export function describePlaceShipTests() {
         gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
 
         // The ship will occupy the first two cells in the horizontal direction
-        expect(gameboard.getShipAt([0, 0])).toBe(ship);
-        expect(gameboard.getShipAt([0, 1])).toBe(ship);
+        expect(gameboard.getShipAt([0, 0])).toStrictEqual(ship.getInfo());
+        expect(gameboard.getShipAt([0, 1])).toStrictEqual(ship.getInfo());
 
         // The third cell should be empty because the ship is only 2 cells long
         expect(gameboard.getShipAt([0, 2])).toBeNull();
@@ -100,11 +100,20 @@ export function describePlaceShipTests() {
         gameboard.placeShip(ship, [0, 0], DIRECTIONS.VERTICAL);
 
         // The ship will occupy the first two cells in the vertical direction
-        expect(gameboard.getShipAt([0, 0])).toBe(ship);
-        expect(gameboard.getShipAt([1, 0])).toBe(ship);
+        expect(gameboard.getShipAt([0, 0])).toStrictEqual(ship.getInfo());
+        expect(gameboard.getShipAt([1, 0])).toStrictEqual(ship.getInfo());
 
         // The third cell should be empty because the ship is only 2 cells long
         expect(gameboard.getShipAt([2, 0])).toBeNull();
+      });
+
+      it("should place the ship with lowercase direction on the gameboard", () => {
+        const gameboard = new Gameboard();
+        const ship = createMockShip(1);
+
+        gameboard.placeShip(ship, [0, 0], "horizontal");
+
+        expect(gameboard.getShipAt([0, 0])).toStrictEqual(ship.getInfo());
       });
 
       it("should place the ship with uppercase direction on the gameboard", () => {
@@ -113,7 +122,7 @@ export function describePlaceShipTests() {
 
         gameboard.placeShip(ship, [0, 0], "HORIZONTAL");
 
-        expect(gameboard.getShipAt([0, 0])).toBe(ship);
+        expect(gameboard.getShipAt([0, 0])).toStrictEqual(ship.getInfo());
       });
 
       it("should place the ship with mixed-case direction on the gameboard", () => {
@@ -122,7 +131,16 @@ export function describePlaceShipTests() {
 
         gameboard.placeShip(ship, [0, 0], "VeRtIcAl");
 
-        expect(gameboard.getShipAt([0, 0])).toBe(ship);
+        expect(gameboard.getShipAt([0, 0])).toStrictEqual(ship.getInfo());
+      });
+
+      it("should return true when the ship is placed successfully on the gameboard", () => {
+        const gameboard = new Gameboard();
+        const ship = createMockShip(1);
+
+        expect(gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL)).toBe(
+          true
+        );
       });
 
       describe.each([
@@ -143,18 +161,21 @@ export function describePlaceShipTests() {
             const gameboard = new Gameboard(dimensions);
             const ship = createMockShip(length);
 
-            gameboard.placeShip(ship, coordinates, direction);
+            // The ship is successfully placed on the gameboard
+            expect(gameboard.placeShip(ship, coordinates, direction)).toBe(
+              true
+            );
 
             // The ship will occupy cells corresponding to the length of the ship in the given direction
             for (let i = 0; i < length; i++) {
               if (direction === DIRECTIONS.HORIZONTAL) {
                 expect(
                   gameboard.getShipAt([coordinates[0], coordinates[1] + i])
-                ).toBe(ship);
+                ).toStrictEqual(ship.getInfo());
               } else if (direction === DIRECTIONS.VERTICAL) {
                 expect(
                   gameboard.getShipAt([coordinates[0] + i, coordinates[1]])
-                ).toBe(ship);
+                ).toStrictEqual(ship.getInfo());
               }
             }
 
@@ -217,18 +238,21 @@ export function describePlaceShipTests() {
               const gameboard = new Gameboard(dimensions);
               const ship = createMockShip(length);
 
-              gameboard.placeShip(ship, coordinates, direction);
+              // The ship is successfully placed on the gameboard
+              expect(gameboard.placeShip(ship, coordinates, direction)).toBe(
+                true
+              );
 
               // The ship will occupy cells corresponding to the length of the ship in the given direction
               for (let i = 0; i < length; i++) {
                 if (direction === DIRECTIONS.HORIZONTAL) {
                   expect(
                     gameboard.getShipAt([coordinates[0], coordinates[1] + i])
-                  ).toBe(ship);
+                  ).toStrictEqual(ship.getInfo());
                 } else if (direction === DIRECTIONS.VERTICAL) {
                   expect(
                     gameboard.getShipAt([coordinates[0] + i, coordinates[1]])
-                  ).toBe(ship);
+                  ).toStrictEqual(ship.getInfo());
                 }
               }
             }

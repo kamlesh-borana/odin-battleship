@@ -9,16 +9,26 @@ import {
 export const createMockShip = (length, options = {}) => {
   const {
     id = createUniqueId(),
+    name = "Mock Ship",
     hits = 0,
     hitMethodReturnValue = true,
     isSunkMethodReturnValue = false,
+    getInfoMethodReturnValue = {
+      id,
+      name,
+      length,
+      hits,
+      isSunk: isSunkMethodReturnValue,
+    },
   } = options;
   return {
     id,
+    name,
     length,
     hits,
     hit: jest.fn().mockReturnValue(hitMethodReturnValue),
     isSunk: jest.fn().mockReturnValue(isSunkMethodReturnValue),
+    getInfo: jest.fn().mockReturnValue(getInfoMethodReturnValue),
   };
 };
 
@@ -90,15 +100,28 @@ export const testInvalidShipError = (
     errorMessagesObj.length
   );
 
-  it(`should throw an error if the ${argumentName} object does not have a hits property`, () => {
+  it(`should throw an error if the ${argumentName} object does not have a name property`, () => {
     expect(() => callback({ id: "123", length: 1 })).toThrow(
+      errorMessagesObj.noNameProperty
+    );
+  });
+
+  testInvalidShipNameError(
+    "name",
+    (value) => callback({ id: "123", length: 1, name: value }),
+    errorMessagesObj.name
+  );
+
+  it(`should throw an error if the ${argumentName} object does not have a hits property`, () => {
+    expect(() => callback({ id: "123", length: 1, name: "Mock Ship" })).toThrow(
       errorMessagesObj.noHitsProperty
     );
   });
 
   testInvalidShipHitsError(
     "hits",
-    (value) => callback({ id: "123", length: 1, hits: value }),
+    (value) =>
+      callback({ id: "123", length: 1, name: "Mock Ship", hits: value }),
     1,
     errorMessagesObj.hits
   );
@@ -106,17 +129,23 @@ export const testInvalidShipError = (
   it.each([
     [
       "does not have a hit method",
-      { id: "123", length: 1, hits: 0 },
+      { id: "123", length: 1, name: "Mock Ship", hits: 0 },
       errorMessagesObj.noHitMethod,
     ],
     [
       "has a hit method that is not a function",
-      { id: "123", length: 1, hits: 0, hit: "not a function" },
+      {
+        id: "123",
+        length: 1,
+        name: "Mock Ship",
+        hits: 0,
+        hit: "not a function",
+      },
       errorMessagesObj.hitMethodNotAFunction,
     ],
     [
       "does not have a isSunk method",
-      { id: "123", length: 1, hits: 0, hit: () => true },
+      { id: "123", length: 1, name: "Mock Ship", hits: 0, hit: () => true },
       errorMessagesObj.noIsSunkMethod,
     ],
     [
@@ -124,11 +153,37 @@ export const testInvalidShipError = (
       {
         id: "123",
         length: 1,
+        name: "Mock Ship",
         hits: 0,
         hit: () => true,
         isSunk: "not a function",
       },
       errorMessagesObj.isSunkMethodNotAFunction,
+    ],
+    [
+      "does not have a getInfo method",
+      {
+        id: "123",
+        length: 1,
+        name: "Mock Ship",
+        hits: 0,
+        hit: () => true,
+        isSunk: () => false,
+      },
+      errorMessagesObj.noGetInfoMethod,
+    ],
+    [
+      "has a getInfo method that is not a function",
+      {
+        id: "123",
+        length: 1,
+        name: "Mock Ship",
+        hits: 0,
+        hit: () => true,
+        isSunk: () => false,
+        getInfo: "not a function",
+      },
+      errorMessagesObj.getInfoMethodNotAFunction,
     ],
   ])(
     `should throw an error if the ${argumentName} object %s`,

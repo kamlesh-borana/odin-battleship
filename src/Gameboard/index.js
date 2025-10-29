@@ -49,7 +49,13 @@ class Gameboard {
     }
 
     const [row, column] = coordinates;
-    return this.#board[row][column].ship;
+    const cell = this.#board[row][column];
+
+    if (cell.ship) {
+      return cell.ship.getInfo();
+    }
+
+    return null;
   }
 
   isCellHit(coordinates) {
@@ -62,7 +68,8 @@ class Gameboard {
     }
 
     const [row, column] = coordinates;
-    return this.#board[row][column].hit;
+    const cell = this.#board[row][column];
+    return cell.hit;
   }
 
   isCellMissHit(coordinates) {
@@ -75,7 +82,8 @@ class Gameboard {
     }
 
     const [row, column] = coordinates;
-    return this.#board[row][column].hit && !this.#board[row][column].ship;
+    const cell = this.#board[row][column];
+    return cell.hit && !cell.ship;
   }
 
   placeShip(ship, coordinates, direction) {
@@ -102,6 +110,8 @@ class Gameboard {
     }
 
     this.#ships.push(ship);
+
+    return true;
   }
 
   receiveAttack(coordinates) {
@@ -121,8 +131,10 @@ class Gameboard {
 
     const ship = cell.ship;
     if (ship) {
-      ship.hit();
+      return ship.hit();
     }
+
+    return true;
   }
 
   allShipsSunk() {
@@ -133,12 +145,7 @@ class Gameboard {
     const board = this.#board.map((row) =>
       row.map((cell) => ({
         hit: cell.hit,
-        ship: cell.ship
-          ? {
-              id: cell.ship.id,
-              length: cell.ship.length,
-            }
-          : null,
+        ship: cell.ship ? cell.ship.getInfo() : null,
       }))
     );
     return board;
