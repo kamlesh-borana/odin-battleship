@@ -1,20 +1,13 @@
 import { createValidationResult } from "../../utils";
-import { validateIsPositiveIntegerNumber } from "../../utils/validation";
-import {
-  shipInputsValidationMessages,
-  shipLengthValidationMessages,
-} from "./constants";
+import { shipLengthValidationMessages } from "../../utils/constants";
+import { validateShipLength } from "../../utils/ship";
+import { shipInputsValidationMessages } from "./constants";
 
-const validateShipLength = (length) => {
-  const validationResult = validateIsPositiveIntegerNumber(
+export const validateShipInputs = (length) => {
+  const shipLengthValidationResult = validateShipLength(
     length,
     shipLengthValidationMessages
   );
-  return validationResult;
-};
-
-export const validateShipInputs = (length) => {
-  const shipLengthValidationResult = validateShipLength(length);
   if (!shipLengthValidationResult.isValid) {
     return shipLengthValidationResult;
   }

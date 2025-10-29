@@ -1,15 +1,46 @@
+import { createValidationResult, hasProperty, isFunction } from ".";
 import {
-  createValidationResult,
-  hasValue,
-  isFiniteNumber,
-  isFunction,
-  isIntegerNumber,
-  isNegativeNumber,
-  isNumber,
-  isZero,
-} from ".";
-import { shipValidationMessages } from "./constants";
-import { validateIsObject } from "./validation";
+  shipHitsValidationMessages,
+  shipLengthValidationMessages,
+  shipValidationMessages,
+} from "./constants";
+import {
+  validateIsNotANegativeIntegerNumber,
+  validateIsObject,
+  validateIsPositiveIntegerNumber,
+} from "./validation";
+
+export const validateShipLength = (
+  length,
+  validationMessagesObj = shipLengthValidationMessages
+) => {
+  const validationResult = validateIsPositiveIntegerNumber(
+    length,
+    validationMessagesObj
+  );
+  return validationResult;
+};
+
+export const validateShipHits = (
+  hits,
+  length,
+  validationMessagesObj = shipHitsValidationMessages
+) => {
+  const isNegativeIntegerNumberValidationResult =
+    validateIsNotANegativeIntegerNumber(hits, validationMessagesObj);
+  if (!isNegativeIntegerNumberValidationResult.isValid) {
+    return isNegativeIntegerNumberValidationResult;
+  }
+
+  if (hits > length) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.isGreaterThanLength
+    );
+  }
+
+  return createValidationResult(true, validationMessagesObj.valid.default);
+};
 
 export const validateShip = (
   ship,
@@ -23,82 +54,71 @@ export const validateShip = (
     return isObjectValidationResult;
   }
 
-  if (!hasValue(ship.id)) {
+  if (!hasProperty(ship, "id")) {
     return createValidationResult(
       false,
-      shipValidationMessages.invalid.noIdProperty
+      validationMessagesObj.invalid.noIdProperty
     );
   }
 
-  if (!hasValue(ship.length)) {
+  if (!hasProperty(ship, "length")) {
     return createValidationResult(
       false,
-      shipValidationMessages.invalid.noLengthProperty
+      validationMessagesObj.invalid.noLengthProperty
     );
   }
 
-  if (!isNumber(ship.length)) {
+  const lengthValidationResult = validateShipLength(
+    ship.length,
+    validationMessagesObj.length
+  );
+  if (!lengthValidationResult.isValid) {
+    return lengthValidationResult;
+  }
+
+  if (!hasProperty(ship, "hits")) {
     return createValidationResult(
       false,
-      shipValidationMessages.invalid.lengthNotANumber
+      validationMessagesObj.invalid.noHitsProperty
     );
   }
 
-  if (!isFiniteNumber(ship.length)) {
-    return createValidationResult(
-      false,
-      shipValidationMessages.invalid.lengthNotAFiniteNumber
-    );
+  const hitsValidationResult = validateShipHits(
+    ship.hits,
+    ship.length,
+    validationMessagesObj.hits
+  );
+  if (!hitsValidationResult.isValid) {
+    return hitsValidationResult;
   }
 
-  if (!isIntegerNumber(ship.length)) {
+  if (!hasProperty(ship, "hit")) {
     return createValidationResult(
       false,
-      shipValidationMessages.invalid.lengthNotAnIntegerNumber
-    );
-  }
-
-  if (isNegativeNumber(ship.length)) {
-    return createValidationResult(
-      false,
-      shipValidationMessages.invalid.lengthIsNegativeNumber
-    );
-  }
-
-  if (isZero(ship.length)) {
-    return createValidationResult(
-      false,
-      shipValidationMessages.invalid.lengthIsZero
-    );
-  }
-
-  if (!hasValue(ship.hit)) {
-    return createValidationResult(
-      false,
-      shipValidationMessages.invalid.noHitMethod
+      validationMessagesObj.invalid.noHitMethod
     );
   }
 
   if (!isFunction(ship.hit)) {
     return createValidationResult(
       false,
-      shipValidationMessages.invalid.hitMethodNotAFunction
+      validationMessagesObj.invalid.hitMethodNotAFunction
     );
   }
 
-  if (!hasValue(ship.isSunk)) {
+  if (!hasProperty(ship, "isSunk")) {
     return createValidationResult(
       false,
-      shipValidationMessages.invalid.noIsSunkMethod
+      validationMessagesObj.invalid.noIsSunkMethod
     );
   }
 
   if (!isFunction(ship.isSunk)) {
     return createValidationResult(
       false,
-      shipValidationMessages.invalid.isSunkMethodNotAFunction
+      validationMessagesObj.invalid.isSunkMethodNotAFunction
     );
   }
 
-  return createValidationResult(true, shipValidationMessages.valid.default);
+  return createValidationResult(true, validationMessagesObj.valid.default);
 };

@@ -1,14 +1,13 @@
 import Ship from ".";
 import { createConstructorCallback } from "../test-utils";
-import { testIsNotAPositiveIntegerNumberError } from "../test-utils/validation";
-import { shipLengthValidationMessages } from "./utils/constants";
+import { testInvalidShipLengthError } from "../test-utils/ship";
+import { shipLengthValidationMessages } from "../utils/constants";
 
 describe("Ship class module", () => {
   describe("constructor", () => {
     describe("invalid arguments", () => {
       describe("length", () => {
-        // test that it should throw an error if length is not a positive integer number
-        testIsNotAPositiveIntegerNumberError(
+        testInvalidShipLengthError(
           "length",
           createConstructorCallback(Ship),
           shipLengthValidationMessages.invalid

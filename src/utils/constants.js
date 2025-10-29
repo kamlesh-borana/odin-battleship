@@ -40,9 +40,46 @@ export const gameboardCoordinatesValidationMessages = {
   },
 };
 
+export const shipLengthValidationMessages = {
+  valid: {
+    default: "Ship length is valid",
+  },
+  invalid: {
+    default: "Invalid ship length",
+    required: "Ship length is required. It cannot be null or undefined.",
+    isUndefined: "Ship length is required. It cannot be null or undefined.",
+    isNull: "Ship length is required. It cannot be null or undefined.",
+    notANumber: "Ship length must be a number.",
+    notAFiniteNumber: "Ship length must be a finite number.",
+    notAnIntegerNumber: "Ship length must be an integer number.",
+    isNegativeNumber: "Ship length must be a positive number.",
+    isZero: "Ship length must be a positive number. It cannot be zero.",
+  },
+};
+
+export const shipHitsValidationMessages = {
+  valid: {
+    default: "Ship hits is valid",
+  },
+  invalid: {
+    default: "Invalid ship hits",
+    required: "Ship hits is required. It cannot be null or undefined.",
+    isUndefined: "Ship hits is required. It cannot be null or undefined.",
+    isNull: "Ship hits is required. It cannot be null or undefined.",
+    notANumber: "Ship hits must be a number.",
+    notAFiniteNumber: "Ship hits must be a finite number.",
+    notAnIntegerNumber: "Ship hits must be an integer number.",
+    isNegativeNumber: "Ship hits must be a non-negative integer number.",
+    isGreaterThanLength:
+      "Ship hits must be less than or equal to the ship's length.",
+  },
+};
+
 export const shipValidationMessages = {
   valid: {
     default: "Ship is valid",
+    length: shipLengthValidationMessages.valid,
+    hits: shipHitsValidationMessages.valid,
   },
   invalid: {
     default: "Invalid ship",
@@ -52,27 +89,16 @@ export const shipValidationMessages = {
     notAnObject: "Ship must be an object.",
     noIdProperty: "Ship must have an id property.",
     noLengthProperty: "Ship must have a length property.",
-    lengthNotANumber: "Ship length must be a number.",
-    lengthNotAFiniteNumber: "Ship length must be a finite number.",
-    lengthNotAnIntegerNumber: "Ship length must be an integer number.",
-    lengthIsNegativeNumber: "Ship length must be a positive number.",
-    lengthIsZero: "Ship length must be a positive number. It cannot be zero.",
+    length: shipLengthValidationMessages.invalid,
     noHitsProperty: "Ship must have a hits property.",
-    hitsNotANumber: "Ship hits must be a number.",
-    hitsNotAFiniteNumber: "Ship hits must be a finite number.",
-    hitsNotAnIntegerNumber: "Ship hits must be an integer number.",
-    hitsIsNegativeNumber: "Ship hits must be a non-negative number.",
-    hitsIsGreaterThanLength:
-      "Ship hits must be less than or equal to the length.",
+    hits: shipHitsValidationMessages.invalid,
     noHitMethod: "Ship must have a hit method.",
     hitMethodNotAFunction: "Ship's hit method must be a function.",
-    hitMethodReturnsNonBooleanValue:
-      "Ship's hit method must return a boolean value.",
     noIsSunkMethod: "Ship must have an isSunk method.",
     isSunkMethodNotAFunction: "Ship's isSunk method must be a function.",
-    isSunkMethodReturnsNonBooleanValue:
-      "Ship's isSunk method must return a boolean value.",
   },
+  length: shipLengthValidationMessages,
+  hits: shipHitsValidationMessages,
 };
 
 export const gameboardDirectionValidationMessages = {
