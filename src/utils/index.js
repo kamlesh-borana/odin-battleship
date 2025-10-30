@@ -59,7 +59,18 @@ export const isEmptyString = (value) => {
 };
 
 export const hasProperty = (object, propertyName) => {
-  return Object.hasOwn(object, propertyName);
+  /**
+   * Note: We are using the 'in' operator instead of Object.hasOwn() here.
+   *
+   * Object.hasOwn() only checks for properties directly defined on the object
+   * and does not traverse the prototype chain. This would cause issues with
+   * correctly identifying methods, getters, and setters, which are typically
+   * defined on the class's prototype and not directly on the object instance.
+   *
+   * The 'in' operator, by contrast, correctly checks for property existence
+   * on both the object itself and its entire prototype chain.
+   */
+  return propertyName in object;
 };
 
 export const createValidationResult = (isValid, message) => {
