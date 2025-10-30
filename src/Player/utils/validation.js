@@ -35,12 +35,8 @@ export const validatePlayerInputs = (type, gameboard) => {
   );
 };
 
-export const validateAddShipsInputs = (ships, dimensions) => {
-  const shipsValidationResult = validateShips(
-    ships,
-    dimensions,
-    shipsValidationMessages
-  );
+export const validateAddShipsInputs = (ships) => {
+  const shipsValidationResult = validateShips(ships, shipsValidationMessages);
   if (!shipsValidationResult.isValid) {
     return shipsValidationResult;
   }

@@ -3,7 +3,11 @@ import {
   createMessageFromTemplate,
   createUniqueId,
 } from "../utils";
-import { getShipAtErrorMessageTemplate } from "./utils/constants";
+import {
+  addShipsErrorMessageTemplate,
+  getShipAtErrorMessageTemplate,
+  placeShipFailedSilentlyErrorMessage,
+} from "./utils/constants";
 import {
   validateAddShipsInputs,
   validatePlayerInputs,
@@ -47,18 +51,42 @@ class Player {
   }
 
   addShips(ships) {
-    const validationResult = validateAddShipsInputs(
-      ships,
-      this.#gameboard.dimensions
-    );
+    const validationResult = validateAddShipsInputs(ships);
     if (!validationResult.isValid) {
       throw new Error(validationResult.message);
     }
 
     for (const shipInfo of ships) {
       const { ship, coordinates, direction } = shipInfo;
-      this.#gameboard.placeShip(ship, coordinates, direction);
+      try {
+        const isPlaced = this.#gameboard.placeShip(
+          ship,
+          coordinates,
+          direction
+        );
+        if (!isPlaced) {
+          throw new Error(
+            createMessageFromTemplate(addShipsErrorMessageTemplate, {
+              errorMessage: placeShipFailedSilentlyErrorMessage,
+              shipName: ship.name,
+              coordinates: createCoordinatesString(coordinates),
+              direction: direction.toLowerCase(),
+            })
+          );
+        }
+      } catch (error) {
+        throw new Error(
+          createMessageFromTemplate(addShipsErrorMessageTemplate, {
+            errorMessage: error.message,
+            shipName: ship.name,
+            coordinates: createCoordinatesString(coordinates),
+            direction: direction.toLowerCase(),
+          })
+        );
+      }
     }
+
+    return true;
   }
 
   getBoard() {

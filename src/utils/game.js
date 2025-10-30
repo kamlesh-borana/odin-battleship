@@ -1,15 +1,9 @@
 import { createValidationResult, hasProperty, isObject } from ".";
 import { shipsValidationMessages } from "./constants";
-import {
-  validateGameboardCoordinates,
-  validateGameboardDirection,
-} from "./gameboard";
-import { validateShip } from "./ship";
 import { validateIsArrayOfAtLeast1Elements } from "./validation";
 
 export const validateShips = (
   ships,
-  dimensions,
   validationMessagesObj = shipsValidationMessages
 ) => {
   const isArrayOfAtLeast1ElementsValidationResult =
@@ -26,7 +20,6 @@ export const validateShips = (
       );
     }
 
-    // Validate ship
     if (!hasProperty(shipPlacementInfo, "ship")) {
       return createValidationResult(
         false,
@@ -34,15 +27,6 @@ export const validateShips = (
       );
     }
 
-    const shipValidationResult = validateShip(
-      shipPlacementInfo.ship,
-      validationMessagesObj.ship
-    );
-    if (!shipValidationResult.isValid) {
-      return shipValidationResult;
-    }
-
-    // Validate coordinates
     if (!hasProperty(shipPlacementInfo, "coordinates")) {
       return createValidationResult(
         false,
@@ -50,29 +34,11 @@ export const validateShips = (
       );
     }
 
-    const gameboardCoordinatesValidationResult = validateGameboardCoordinates(
-      shipPlacementInfo.coordinates,
-      dimensions,
-      validationMessagesObj.gameboardCoordinates
-    );
-    if (!gameboardCoordinatesValidationResult.isValid) {
-      return gameboardCoordinatesValidationResult;
-    }
-
-    // Validate direction
     if (!hasProperty(shipPlacementInfo, "direction")) {
       return createValidationResult(
         false,
         validationMessagesObj.invalid.noDirectionPropertyInObject
       );
-    }
-
-    const gameboardDirectionValidationResult = validateGameboardDirection(
-      shipPlacementInfo.direction,
-      validationMessagesObj.gameboardDirection
-    );
-    if (!gameboardDirectionValidationResult.isValid) {
-      return gameboardDirectionValidationResult;
     }
   }
 

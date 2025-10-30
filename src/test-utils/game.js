@@ -1,9 +1,4 @@
-import { DEFAULT_OUT_OF_BOUNDS_COORDINATES } from "./constants";
-import {
-  testInvalidGameboardCoordinatesError,
-  testInvalidGameboardDirectionError,
-} from "./gameboard";
-import { createMockShip, testInvalidShipError } from "./ship";
+import { createMockShip } from "./ship";
 import { testIsNotAnArrayOfAtLeast1ElementError } from "./validation";
 
 export const testInvalidShipsError = (
@@ -24,58 +19,22 @@ export const testInvalidShipsError = (
       );
     });
 
-    describe("ship", () => {
-      it(`should throw an error if the ${argumentName} array contains objects with no ship property`, () => {
-        expect(() => callback([{}])).toThrow(
-          errorMessagesObj.noShipPropertyInObject
-        );
-      });
-
-      testInvalidShipError(
-        "ship",
-        (value) => callback([{ ship: value }]),
-        errorMessagesObj.ship
+    it(`should throw an error if the ${argumentName} array contains objects with no ship property`, () => {
+      expect(() => callback([{}])).toThrow(
+        errorMessagesObj.noShipPropertyInObject
       );
     });
 
-    describe("coordinates", () => {
-      it(`should throw an error if the ${argumentName} array contains objects with no coordinates property`, () => {
-        expect(() => callback([{ ship: createMockShip(1) }])).toThrow(
-          errorMessagesObj.noCoordinatesPropertyInObject
-        );
-      });
-
-      const options = {
-        checkCoordinatesOutOfBoundsError: true,
-        outOfBoundsCoordinatesList: DEFAULT_OUT_OF_BOUNDS_COORDINATES,
-      };
-      testInvalidGameboardCoordinatesError(
-        "coordinates",
-        (value) => callback([{ ship: createMockShip(1), coordinates: value }]),
-        errorMessagesObj.gameboardCoordinates,
-        options
+    it(`should throw an error if the ${argumentName} array contains objects with no coordinates property`, () => {
+      expect(() => callback([{ ship: createMockShip(1) }])).toThrow(
+        errorMessagesObj.noCoordinatesPropertyInObject
       );
     });
 
-    describe("direction", () => {
-      it(`should throw an error if the ${argumentName} array contains objects with no direction property`, () => {
-        expect(() =>
-          callback([{ ship: createMockShip(1), coordinates: [0, 0] }])
-        ).toThrow(errorMessagesObj.noDirectionPropertyInObject);
-      });
-
-      testInvalidGameboardDirectionError(
-        "direction",
-        (value) =>
-          callback([
-            {
-              ship: createMockShip(1),
-              coordinates: [0, 0],
-              direction: value,
-            },
-          ]),
-        errorMessagesObj.gameboardDirection
-      );
+    it(`should throw an error if the ${argumentName} array contains objects with no direction property`, () => {
+      expect(() =>
+        callback([{ ship: createMockShip(1), coordinates: [0, 0] }])
+      ).toThrow(errorMessagesObj.noDirectionPropertyInObject);
     });
   });
 };
