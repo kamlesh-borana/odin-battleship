@@ -37,7 +37,7 @@ export const createAndPlaceMultipleShipsOnGameboard = (gameboard) => {
   };
 };
 
-export const addShipToExpectedBoard = (
+export const addShipInfoToExpectedBoard = (
   expectedBoard,
   ship,
   coordinates,

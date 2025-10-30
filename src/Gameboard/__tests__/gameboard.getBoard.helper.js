@@ -6,7 +6,7 @@ import {
   DIRECTIONS,
 } from "../../utils/constants";
 import {
-  addShipToExpectedBoard,
+  addShipInfoToExpectedBoard,
   createAndPlaceMultipleShipsOnGameboard,
 } from "../test-utils";
 
@@ -26,7 +26,7 @@ export function describeGetBoardTests() {
       gameboard.placeShip(ship, coordinates, DIRECTIONS.HORIZONTAL);
 
       const expectedBoard = createGameboardBoard(DEFAULT_GAMEBOARD_DIMENSIONS);
-      addShipToExpectedBoard(
+      addShipInfoToExpectedBoard(
         expectedBoard,
         ship,
         coordinates,
@@ -43,7 +43,7 @@ export function describeGetBoardTests() {
 
       const expectedBoard = createGameboardBoard(DEFAULT_GAMEBOARD_DIMENSIONS);
       for (let i = 0; i < ships.length; i++) {
-        addShipToExpectedBoard(
+        addShipInfoToExpectedBoard(
           expectedBoard,
           ships[i],
           coordinatesList[i],
@@ -66,7 +66,7 @@ export function describeGetBoardTests() {
       gameboard.receiveAttack(coordinates); // Hit
       expectedBoard[coordinates[0]][coordinates[1]].hit = true;
 
-      addShipToExpectedBoard(
+      addShipInfoToExpectedBoard(
         expectedBoard,
         ship,
         coordinates,
@@ -88,7 +88,7 @@ export function describeGetBoardTests() {
       gameboard.receiveAttack([1, 1]); // Miss
       expectedBoard[1][1].hit = true;
 
-      addShipToExpectedBoard(
+      addShipInfoToExpectedBoard(
         expectedBoard,
         ship,
         coordinates,
@@ -118,7 +118,7 @@ export function describeGetBoardTests() {
       expectedBoard[5][0].hit = true;
 
       for (let i = 0; i < ships.length; i++) {
-        addShipToExpectedBoard(
+        addShipInfoToExpectedBoard(
           expectedBoard,
           ships[i],
           coordinatesList[i],
@@ -164,7 +164,7 @@ export function describeGetBoardTests() {
       expectedBoard[5][0].hit = true;
 
       for (let i = 0; i < ships.length; i++) {
-        addShipToExpectedBoard(
+        addShipInfoToExpectedBoard(
           expectedBoard,
           ships[i],
           coordinatesList[i],
@@ -253,7 +253,7 @@ export function describeGetBoardTests() {
       });
 
       for (let i = 0; i < ships.length; i++) {
-        addShipToExpectedBoard(
+        addShipInfoToExpectedBoard(
           expectedBoard,
           ships[i],
           coordinatesList[i],
@@ -347,7 +347,7 @@ export function describeGetBoardTests() {
       });
 
       for (let i = 0; i < ships.length; i++) {
-        addShipToExpectedBoard(
+        addShipInfoToExpectedBoard(
           expectedBoard,
           ships[i],
           coordinatesList[i],
