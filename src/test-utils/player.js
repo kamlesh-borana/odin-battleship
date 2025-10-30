@@ -1,11 +1,20 @@
-import { createUniqueId } from "../utils";
+import { createGameboardBoard, createUniqueId } from "../utils";
+import { DEFAULT_GAMEBOARD_DIMENSIONS } from "../utils/constants";
 import { testIsNotAStringError } from "./validation";
 
 export const createMockPlayer = (type, options = {}) => {
-  const { id = createUniqueId() } = options;
+  const {
+    id = createUniqueId(),
+    getShipAtReturnValue = null,
+    addShipsReturnValue = true,
+    getBoardReturnValue = createGameboardBoard(DEFAULT_GAMEBOARD_DIMENSIONS),
+  } = options;
   return {
     id,
     type,
+    getShipAt: jest.fn().mockReturnValue(getShipAtReturnValue),
+    addShips: jest.fn().mockReturnValue(addShipsReturnValue),
+    getBoard: jest.fn().mockReturnValue(getBoardReturnValue),
   };
 };
 

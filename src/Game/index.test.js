@@ -14,8 +14,6 @@ describe("Game class module", () => {
           createConstructorCallback(Game),
           playersListValidationMessages.invalid
         );
-
-        // TODO: Test that the players array elements contains valid player objects with required public interfaces (Duck typing)
       });
     });
 

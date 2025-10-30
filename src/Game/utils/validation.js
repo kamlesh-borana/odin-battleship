@@ -1,4 +1,10 @@
-import { createValidationResult, isObject } from "../../utils";
+import {
+  createValidationResult,
+  hasProperty,
+  isFunction,
+  isObject,
+} from "../../utils";
+import { validatePlayerType } from "../../utils/player";
 import { validateIsArrayOfAtLeast2Elements } from "../../utils/validation";
 import {
   gameInputsValidationMessages,
@@ -20,6 +26,72 @@ const validatePlayersList = (
       false,
       validationMessagesObj.invalid.notAnArrayOfObjects
     );
+  }
+
+  for (const player of players) {
+    if (!hasProperty(player, "id")) {
+      return createValidationResult(
+        false,
+        validationMessagesObj.invalid.noIdProperty
+      );
+    }
+
+    if (!hasProperty(player, "type")) {
+      return createValidationResult(
+        false,
+        validationMessagesObj.invalid.noTypeProperty
+      );
+    }
+
+    const playerTypeValidationResult = validatePlayerType(
+      player.type,
+      validationMessagesObj.playerType
+    );
+    if (!playerTypeValidationResult.isValid) {
+      return playerTypeValidationResult;
+    }
+
+    if (!hasProperty(player, "getShipAt")) {
+      return createValidationResult(
+        false,
+        validationMessagesObj.invalid.noGetShipAtMethod
+      );
+    }
+
+    if (!isFunction(player.getShipAt)) {
+      return createValidationResult(
+        false,
+        validationMessagesObj.invalid.getShipAtMethodNotAFunction
+      );
+    }
+
+    if (!hasProperty(player, "addShips")) {
+      return createValidationResult(
+        false,
+        validationMessagesObj.invalid.noAddShipsMethod
+      );
+    }
+
+    if (!isFunction(player.addShips)) {
+      return createValidationResult(
+        false,
+        validationMessagesObj.invalid.addShipsMethodNotAFunction
+      );
+    }
+
+    if (!hasProperty(player, "getBoard")) {
+      return createValidationResult(
+        false,
+        validationMessagesObj.invalid.noGetBoardMethod
+      );
+    }
+
+    if (!isFunction(player.getBoard)) {
+      return createValidationResult(
+        false,
+        validationMessagesObj.invalid.getBoardMethodNotAFunction
+      );
+    }
   }
 
   return createValidationResult(true, validationMessagesObj.valid.default);
