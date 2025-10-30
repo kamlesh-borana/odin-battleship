@@ -40,6 +40,24 @@ describe("Player class module", () => {
           new Player(PLAYER_TYPES.REAL, createMockGameboard())
         ).toBeInstanceOf(Player);
       });
+
+      it("should create a player instance if a valid lowercase type and gameboard arguments are provided", () => {
+        expect(new Player("real", createMockGameboard())).toBeInstanceOf(
+          Player
+        );
+      });
+
+      it("should create a player instance if a valid uppercase type and gameboard arguments are provided", () => {
+        expect(new Player("REAL", createMockGameboard())).toBeInstanceOf(
+          Player
+        );
+      });
+
+      it("should create a player instance if a valid mixed case type and gameboard arguments are provided", () => {
+        expect(new Player("CoMpUtEr", createMockGameboard())).toBeInstanceOf(
+          Player
+        );
+      });
     });
 
     describe("player instance", () => {
@@ -70,6 +88,14 @@ describe("Player class module", () => {
               PLAYER_TYPES.COMPUTER,
               createMockGameboard()
             );
+
+            expect(player.type).toBe(PLAYER_TYPES.REAL);
+            expect(player2.type).toBe(PLAYER_TYPES.COMPUTER);
+          });
+
+          it("should return the type of the player passed to the constructor in lowercase", () => {
+            const player = new Player("REAL", createMockGameboard());
+            const player2 = new Player("cOmPuTeR", createMockGameboard());
 
             expect(player.type).toBe(PLAYER_TYPES.REAL);
             expect(player2.type).toBe(PLAYER_TYPES.COMPUTER);

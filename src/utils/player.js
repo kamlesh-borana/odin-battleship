@@ -14,7 +14,8 @@ export const validatePlayerType = (
     return isStringValidationResult;
   }
 
-  if (!VALID_PLAYER_TYPES.includes(type)) {
+  const lowerCaseType = type.toLowerCase();
+  if (!VALID_PLAYER_TYPES.includes(lowerCaseType)) {
     return createValidationResult(
       false,
       validationMessagesObj.invalid.notAValidType

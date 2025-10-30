@@ -17,7 +17,7 @@ class Player {
     }
 
     this.#id = createUniqueId();
-    this.#type = type;
+    this.#type = type.toLowerCase(); // Convert to lowercase to ensure consistency
     this.#gameboard = gameboard;
   }
 
