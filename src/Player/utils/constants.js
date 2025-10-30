@@ -7,15 +7,6 @@ export const playerInputsValidationMessages = {
   },
 };
 
-export const playerGetShipAtInputsValidationMessages = {
-  valid: {
-    default: "Player get ship at inputs are valid",
-  },
-  invalid: {
-    default: "Invalid player get ship at inputs",
-  },
-};
-
 export const playerAddShipsInputsValidationMessages = {
   valid: {
     default: "Player add ships inputs are valid",

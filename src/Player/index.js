@@ -1,7 +1,6 @@
 import { createUniqueId } from "../utils";
 import {
   validateAddShipsInputs,
-  validateGetShipAtInputs,
   validatePlayerInputs,
 } from "./utils/validation";
 
@@ -30,15 +29,13 @@ class Player {
   }
 
   getShipAt(coordinates) {
-    const validationResult = validateGetShipAtInputs(
-      coordinates,
-      this.#gameboard.dimensions
-    );
-    if (!validationResult.isValid) {
-      throw new Error(validationResult.message);
+    try {
+      return this.#gameboard.getShipAt(coordinates);
+    } catch (error) {
+      throw new Error(
+        `Failed to get ship at coordinates ${coordinates} - ${error.message}`
+      );
     }
-
-    return this.#gameboard.getShipAt(coordinates);
   }
 
   addShips(ships) {

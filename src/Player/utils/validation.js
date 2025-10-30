@@ -1,19 +1,14 @@
 import { createValidationResult } from "../../utils";
 import {
-  gameboardCoordinatesValidationMessages,
   gameboardValidationMessages,
   playerTypeValidationMessages,
   shipsValidationMessages,
 } from "../../utils/constants";
 import { validateShips } from "../../utils/game";
-import {
-  validateGameboard,
-  validateGameboardCoordinates,
-} from "../../utils/gameboard";
+import { validateGameboard } from "../../utils/gameboard";
 import { validatePlayerType } from "../../utils/player";
 import {
   playerAddShipsInputsValidationMessages,
-  playerGetShipAtInputsValidationMessages,
   playerInputsValidationMessages,
 } from "./constants";
 
@@ -37,22 +32,6 @@ export const validatePlayerInputs = (type, gameboard) => {
   return createValidationResult(
     true,
     playerInputsValidationMessages.valid.default
-  );
-};
-
-export const validateGetShipAtInputs = (coordinates, dimensions) => {
-  const gameboardCoordinatesValidationResult = validateGameboardCoordinates(
-    coordinates,
-    dimensions,
-    gameboardCoordinatesValidationMessages
-  );
-  if (!gameboardCoordinatesValidationResult.isValid) {
-    return gameboardCoordinatesValidationResult;
-  }
-
-  return createValidationResult(
-    true,
-    playerGetShipAtInputsValidationMessages.valid.default
   );
 };
 
