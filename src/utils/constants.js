@@ -193,7 +193,7 @@ export const gameboardDimensionsValidationMessages = {
 export const gameboardValidationMessages = {
   valid: {
     default: "Gameboard is valid",
-    gameboardDimensions: gameboardDimensionsValidationMessages.valid,
+    dimensions: gameboardDimensionsValidationMessages.valid,
   },
   invalid: {
     default: "Invalid gameboard",
@@ -201,18 +201,31 @@ export const gameboardValidationMessages = {
     isUndefined: "Gameboard is required. It cannot be null or undefined.",
     isNull: "Gameboard is required. It cannot be null or undefined.",
     notAnObject: "Gameboard must be an object.",
+    noIdProperty: "Gameboard must have an id property.",
     noDimensionsProperty: "Gameboard must have a dimensions property.",
-    gameboardDimensions: gameboardDimensionsValidationMessages.invalid,
-    noPlaceShipMethod: "Gameboard must have a placeShip method.",
-    placeShipMethodNotAFunction:
-      "Gameboard placeShip method must be a function.",
+    dimensions: gameboardDimensionsValidationMessages.invalid,
     noGetShipAtMethod: "Gameboard must have a getShipAt method.",
     getShipAtMethodNotAFunction:
       "Gameboard getShipAt method must be a function.",
+    noIsCellHitMethod: "Gameboard must have an isCellHit method.",
+    isCellHitMethodNotAFunction:
+      "Gameboard isCellHit method must be a function.",
+    noIsCellMissHitMethod: "Gameboard must have an isCellMissHit method.",
+    isCellMissHitMethodNotAFunction:
+      "Gameboard isCellMissHit method must be a function.",
+    noPlaceShipMethod: "Gameboard must have a placeShip method.",
+    placeShipMethodNotAFunction:
+      "Gameboard placeShip method must be a function.",
+    noReceiveAttackMethod: "Gameboard must have a receiveAttack method.",
+    receiveAttackMethodNotAFunction:
+      "Gameboard receiveAttack method must be a function.",
+    noAllShipsSunkMethod: "Gameboard must have an allShipsSunk method.",
+    allShipsSunkMethodNotAFunction:
+      "Gameboard allShipsSunk method must be a function.",
     noGetBoardMethod: "Gameboard must have a getBoard method.",
     getBoardMethodNotAFunction: "Gameboard getBoard method must be a function.",
   },
-  gameboardDimensions: gameboardDimensionsValidationMessages,
+  dimensions: gameboardDimensionsValidationMessages,
 };
 
 export const shipsValidationMessages = {

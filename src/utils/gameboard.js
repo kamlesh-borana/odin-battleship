@@ -86,6 +86,13 @@ export const validateGameboard = (
     return isObjectValidationResult;
   }
 
+  if (!hasProperty(gameboard, "id")) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.noIdProperty
+    );
+  }
+
   if (!hasProperty(gameboard, "dimensions")) {
     return createValidationResult(
       false,
@@ -95,10 +102,52 @@ export const validateGameboard = (
 
   const gameboardDimensionsValidationResult = validateGameboardDimensions(
     gameboard.dimensions,
-    validationMessagesObj.gameboardDimensions
+    validationMessagesObj.dimensions
   );
   if (!gameboardDimensionsValidationResult.isValid) {
     return gameboardDimensionsValidationResult;
+  }
+
+  if (!hasProperty(gameboard, "getShipAt")) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.noGetShipAtMethod
+    );
+  }
+
+  if (!isFunction(gameboard.getShipAt)) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.getShipAtMethodNotAFunction
+    );
+  }
+
+  if (!hasProperty(gameboard, "isCellHit")) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.noIsCellHitMethod
+    );
+  }
+
+  if (!isFunction(gameboard.isCellHit)) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.isCellHitMethodNotAFunction
+    );
+  }
+
+  if (!hasProperty(gameboard, "isCellMissHit")) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.noIsCellMissHitMethod
+    );
+  }
+
+  if (!isFunction(gameboard.isCellMissHit)) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.isCellMissHitMethodNotAFunction
+    );
   }
 
   if (!hasProperty(gameboard, "placeShip")) {
@@ -115,17 +164,31 @@ export const validateGameboard = (
     );
   }
 
-  if (!hasProperty(gameboard, "getShipAt")) {
+  if (!hasProperty(gameboard, "receiveAttack")) {
     return createValidationResult(
       false,
-      validationMessagesObj.invalid.noGetShipAtMethod
+      validationMessagesObj.invalid.noReceiveAttackMethod
     );
   }
 
-  if (!isFunction(gameboard.getShipAt)) {
+  if (!isFunction(gameboard.receiveAttack)) {
     return createValidationResult(
       false,
-      validationMessagesObj.invalid.getShipAtMethodNotAFunction
+      validationMessagesObj.invalid.receiveAttackMethodNotAFunction
+    );
+  }
+
+  if (!hasProperty(gameboard, "allShipsSunk")) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.noAllShipsSunkMethod
+    );
+  }
+
+  if (!isFunction(gameboard.allShipsSunk)) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.allShipsSunkMethodNotAFunction
     );
   }
 
