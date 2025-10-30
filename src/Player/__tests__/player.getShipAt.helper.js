@@ -2,9 +2,14 @@ import Player from "..";
 import { createMockGameboard } from "../../test-utils/gameboard";
 import { createMockShip } from "../../test-utils/ship";
 import {
+  createCoordinatesString,
+  createMessageFromTemplate,
+} from "../../utils";
+import {
   gameboardCoordinatesValidationMessages,
   PLAYER_TYPES,
 } from "../../utils/constants";
+import { getShipAtErrorMessageTemplate } from "../utils/constants";
 
 export function describeGetShipAtTests() {
   describe("getShipAt", () => {
@@ -45,7 +50,11 @@ export function describeGetShipAtTests() {
 
       const coordinates = [8, -2];
       expect(() => player.getShipAt(coordinates)).toThrow(
-        `Failed to get ship at coordinates ${coordinates} - ${gameboardCoordinatesValidationMessages.invalid.outOfBounds}`
+        createMessageFromTemplate(getShipAtErrorMessageTemplate, {
+          coordinates: createCoordinatesString(coordinates),
+          errorMessage:
+            gameboardCoordinatesValidationMessages.invalid.outOfBounds,
+        })
       );
     });
   });

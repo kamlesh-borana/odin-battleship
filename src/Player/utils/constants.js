@@ -7,6 +7,9 @@ export const playerInputsValidationMessages = {
   },
 };
 
+export const getShipAtErrorMessageTemplate =
+  "Failed to get ship at coordinates {coordinates} - {errorMessage}";
+
 export const playerAddShipsInputsValidationMessages = {
   valid: {
     default: "Player add ships inputs are valid",

@@ -76,3 +76,11 @@ export const createGameboardBoard = (dimensions) => {
     Array.from({ length: columns }, () => ({ hit: false, ship: null }))
   );
 };
+
+export const createMessageFromTemplate = (template, args) => {
+  return template.replace(/{(\w+)}/g, (match, key) => args[key] ?? match);
+};
+
+export const createCoordinatesString = (coordinates) => {
+  return `[${coordinates.join(", ")}]`;
+};

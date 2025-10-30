@@ -1,4 +1,9 @@
-import { createUniqueId } from "../utils";
+import {
+  createCoordinatesString,
+  createMessageFromTemplate,
+  createUniqueId,
+} from "../utils";
+import { getShipAtErrorMessageTemplate } from "./utils/constants";
 import {
   validateAddShipsInputs,
   validatePlayerInputs,
@@ -33,7 +38,10 @@ class Player {
       return this.#gameboard.getShipAt(coordinates);
     } catch (error) {
       throw new Error(
-        `Failed to get ship at coordinates ${coordinates} - ${error.message}`
+        createMessageFromTemplate(getShipAtErrorMessageTemplate, {
+          coordinates: createCoordinatesString(coordinates),
+          errorMessage: error.message,
+        })
       );
     }
   }
