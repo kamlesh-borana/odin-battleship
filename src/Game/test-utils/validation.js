@@ -125,7 +125,7 @@ export const testInvalidPlayersListError = (
     ).toThrow(errorMessagesObj.addShipsMethodNotAFunction);
   });
 
-  it(`should throw an error if ${argumentName} array contains objects with no getBoard method`, () => {
+  it(`should throw an error if ${argumentName} array contains objects with no receiveAttack method`, () => {
     expect(() =>
       callback([
         {
@@ -143,6 +143,52 @@ export const testInvalidPlayersListError = (
           addShips: () => {},
         },
       ])
+    ).toThrow(errorMessagesObj.noReceiveAttackMethod);
+  });
+
+  it(`should throw an error if ${argumentName} array contains objects with receiveAttack method that is not a function`, () => {
+    expect(() =>
+      callback([
+        {
+          id: "123",
+          type: PLAYER_TYPES.REAL,
+          getShipAt: () => {},
+          addShip: () => {},
+          addShips: () => {},
+          receiveAttack: "not a function",
+        },
+        {
+          id: "456",
+          type: PLAYER_TYPES.REAL,
+          getShipAt: () => {},
+          addShip: () => {},
+          addShips: () => {},
+          receiveAttack: "not a function",
+        },
+      ])
+    ).toThrow(errorMessagesObj.receiveAttackMethodNotAFunction);
+  });
+
+  it(`should throw an error if ${argumentName} array contains objects with no getBoard method`, () => {
+    expect(() =>
+      callback([
+        {
+          id: "123",
+          type: PLAYER_TYPES.REAL,
+          getShipAt: () => {},
+          addShip: () => {},
+          addShips: () => {},
+          receiveAttack: () => {},
+        },
+        {
+          id: "456",
+          type: PLAYER_TYPES.REAL,
+          getShipAt: () => {},
+          addShip: () => {},
+          addShips: () => {},
+          receiveAttack: () => {},
+        },
+      ])
     ).toThrow(errorMessagesObj.noGetBoardMethod);
   });
 
@@ -155,6 +201,7 @@ export const testInvalidPlayersListError = (
           getShipAt: () => {},
           addShip: () => {},
           addShips: () => {},
+          receiveAttack: () => {},
           getBoard: "not a function",
         },
         {
@@ -163,6 +210,7 @@ export const testInvalidPlayersListError = (
           getShipAt: () => {},
           addShip: () => {},
           addShips: () => {},
+          receiveAttack: () => {},
           getBoard: "not a function",
         },
       ])

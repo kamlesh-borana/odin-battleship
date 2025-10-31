@@ -25,3 +25,5 @@ export const addShipsErrorMessageTemplate =
   "Failed to place all ships on the gameboard. Some ships were not placed successfully. An error occurred while placing the {shipName} at coordinates {coordinates} in the {direction} direction - {errorMessage}";
 export const addShipErrorMessageTemplate =
   "Failed to place the {shipName} at coordinates {coordinates} in the {direction} direction - {errorMessage}";
+export const receiveAttackErrorMessageTemplate =
+  "Failed to receive an attack on the player's gameboard at coordinates {coordinates} - {errorMessage}";

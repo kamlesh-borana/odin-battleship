@@ -35,6 +35,10 @@ export const playersListValidationMessages = {
     noAddShipsMethod: "Players list objects must have an addShips method.",
     addShipsMethodNotAFunction:
       "Players list objects addShips method must be a function.",
+    noReceiveAttackMethod:
+      "Players list objects must have a receiveAttack method.",
+    receiveAttackMethodNotAFunction:
+      "Players list objects receiveAttack method must be a function.",
     noGetBoardMethod: "Players list objects must have a getBoard method.",
     getBoardMethodNotAFunction:
       "Players list objects getBoard method must be a function.",

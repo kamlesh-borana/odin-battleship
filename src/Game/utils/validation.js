@@ -93,6 +93,20 @@ const validatePlayersList = (
       );
     }
 
+    if (!hasProperty(player, "receiveAttack")) {
+      return createValidationResult(
+        false,
+        validationMessagesObj.invalid.noReceiveAttackMethod
+      );
+    }
+
+    if (!isFunction(player.receiveAttack)) {
+      return createValidationResult(
+        false,
+        validationMessagesObj.invalid.receiveAttackMethodNotAFunction
+      );
+    }
+
     if (!hasProperty(player, "getBoard")) {
       return createValidationResult(
         false,

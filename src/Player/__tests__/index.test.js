@@ -14,6 +14,7 @@ import { describeAddShipTests } from "./player.addShip.helper";
 import { describeAddShipsTests } from "./player.addShips.helper";
 import { describeGetBoardTests } from "./player.getBoard.helper";
 import { describeGetShipAtTests } from "./player.getShipAt.helper";
+import { describeReceiveAttackTests } from "./player.receiveAttack.helper";
 
 describe("Player class module", () => {
   describe("constructor", () => {
@@ -113,6 +114,9 @@ describe("Player class module", () => {
 
         // Run add ships tests
         describeAddShipsTests();
+
+        // Run receive attack tests
+        describeReceiveAttackTests();
 
         // Run get board tests
         describeGetBoardTests();

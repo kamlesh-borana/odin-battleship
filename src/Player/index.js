@@ -8,6 +8,7 @@ import {
   addShipsErrorMessageTemplate,
   getShipAtErrorMessageTemplate,
   placeShipFailedSilentlyErrorMessage,
+  receiveAttackErrorMessageTemplate,
 } from "./utils/constants";
 import {
   validateAddShipsInputs,
@@ -100,6 +101,19 @@ class Player {
           shipName: ship.name,
           coordinates: createCoordinatesString(coordinates),
           direction: direction.toLowerCase(),
+        })
+      );
+    }
+  }
+
+  receiveAttack(coordinates) {
+    try {
+      return this.#gameboard.receiveAttack(coordinates);
+    } catch (error) {
+      throw new Error(
+        createMessageFromTemplate(receiveAttackErrorMessageTemplate, {
+          coordinates: createCoordinatesString(coordinates),
+          errorMessage: error.message,
         })
       );
     }
