@@ -6,6 +6,7 @@ export const createMockPlayer = (type, options = {}) => {
   const {
     id = createUniqueId(),
     getShipAtReturnValue = null,
+    addShipReturnValue = true,
     addShipsReturnValue = true,
     getBoardReturnValue = createGameboardBoard(DEFAULT_GAMEBOARD_DIMENSIONS),
   } = options;
@@ -13,6 +14,7 @@ export const createMockPlayer = (type, options = {}) => {
     id,
     type,
     getShipAt: jest.fn().mockReturnValue(getShipAtReturnValue),
+    addShip: jest.fn().mockReturnValue(addShipReturnValue),
     addShips: jest.fn().mockReturnValue(addShipsReturnValue),
     getBoard: jest.fn().mockReturnValue(getBoardReturnValue),
   };

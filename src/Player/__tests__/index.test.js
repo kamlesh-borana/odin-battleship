@@ -10,6 +10,7 @@ import {
   PLAYER_TYPES,
   playerTypeValidationMessages,
 } from "../../utils/constants";
+import { describeAddShipTests } from "./player.addShip.helper";
 import { describeAddShipsTests } from "./player.addShips.helper";
 import { describeGetBoardTests } from "./player.getBoard.helper";
 import { describeGetShipAtTests } from "./player.getShipAt.helper";
@@ -106,6 +107,9 @@ describe("Player class module", () => {
       describe("methods", () => {
         // Run get ship at tests
         describeGetShipAtTests();
+
+        // Run add ship tests
+        describeAddShipTests();
 
         // Run add ships tests
         describeAddShipsTests();

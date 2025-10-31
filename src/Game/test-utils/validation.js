@@ -57,11 +57,49 @@ export const testInvalidPlayersListError = (
     ).toThrow(errorMessagesObj.getShipAtMethodNotAFunction);
   });
 
-  it(`should throw an error if ${argumentName} array contains objects with no addShips method`, () => {
+  it(`should throw an error if ${argumentName} array contains objects with no addShip method`, () => {
     expect(() =>
       callback([
         { id: "123", type: PLAYER_TYPES.REAL, getShipAt: () => {} },
         { id: "456", type: PLAYER_TYPES.REAL, getShipAt: () => {} },
+      ])
+    ).toThrow(errorMessagesObj.noAddShipMethod);
+  });
+
+  it(`should throw an error if ${argumentName} array contains objects with addShip method that is not a function`, () => {
+    expect(() =>
+      callback([
+        {
+          id: "123",
+          type: PLAYER_TYPES.REAL,
+          getShipAt: () => {},
+          addShip: "not a function",
+        },
+        {
+          id: "456",
+          type: PLAYER_TYPES.REAL,
+          getShipAt: () => {},
+          addShip: "not a function",
+        },
+      ])
+    ).toThrow(errorMessagesObj.addShipMethodNotAFunction);
+  });
+
+  it(`should throw an error if ${argumentName} array contains objects with no addShips method`, () => {
+    expect(() =>
+      callback([
+        {
+          id: "123",
+          type: PLAYER_TYPES.REAL,
+          getShipAt: () => {},
+          addShip: () => {},
+        },
+        {
+          id: "456",
+          type: PLAYER_TYPES.REAL,
+          getShipAt: () => {},
+          addShip: () => {},
+        },
       ])
     ).toThrow(errorMessagesObj.noAddShipsMethod);
   });
@@ -73,12 +111,14 @@ export const testInvalidPlayersListError = (
           id: "123",
           type: PLAYER_TYPES.REAL,
           getShipAt: () => {},
+          addShip: () => {},
           addShips: "not a function",
         },
         {
           id: "456",
           type: PLAYER_TYPES.REAL,
           getShipAt: () => {},
+          addShip: () => {},
           addShips: "not a function",
         },
       ])
@@ -92,12 +132,14 @@ export const testInvalidPlayersListError = (
           id: "123",
           type: PLAYER_TYPES.REAL,
           getShipAt: () => {},
+          addShip: () => {},
           addShips: () => {},
         },
         {
           id: "456",
           type: PLAYER_TYPES.REAL,
           getShipAt: () => {},
+          addShip: () => {},
           addShips: () => {},
         },
       ])
@@ -111,6 +153,7 @@ export const testInvalidPlayersListError = (
           id: "123",
           type: PLAYER_TYPES.REAL,
           getShipAt: () => {},
+          addShip: () => {},
           addShips: () => {},
           getBoard: "not a function",
         },
@@ -118,6 +161,7 @@ export const testInvalidPlayersListError = (
           id: "456",
           type: PLAYER_TYPES.REAL,
           getShipAt: () => {},
+          addShip: () => {},
           addShips: () => {},
           getBoard: "not a function",
         },

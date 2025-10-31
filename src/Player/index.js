@@ -4,6 +4,7 @@ import {
   createUniqueId,
 } from "../utils";
 import {
+  addShipErrorMessageTemplate,
   addShipsErrorMessageTemplate,
   getShipAtErrorMessageTemplate,
   placeShipFailedSilentlyErrorMessage,
@@ -87,6 +88,21 @@ class Player {
     }
 
     return true;
+  }
+
+  addShip(ship, coordinates, direction) {
+    try {
+      return this.#gameboard.placeShip(ship, coordinates, direction);
+    } catch (error) {
+      throw new Error(
+        createMessageFromTemplate(addShipErrorMessageTemplate, {
+          errorMessage: error.message,
+          shipName: ship.name,
+          coordinates: createCoordinatesString(coordinates),
+          direction: direction.toLowerCase(),
+        })
+      );
+    }
   }
 
   getBoard() {

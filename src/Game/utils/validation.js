@@ -65,6 +65,20 @@ const validatePlayersList = (
       );
     }
 
+    if (!hasProperty(player, "addShip")) {
+      return createValidationResult(
+        false,
+        validationMessagesObj.invalid.noAddShipMethod
+      );
+    }
+
+    if (!isFunction(player.addShip)) {
+      return createValidationResult(
+        false,
+        validationMessagesObj.invalid.addShipMethodNotAFunction
+      );
+    }
+
     if (!hasProperty(player, "addShips")) {
       return createValidationResult(
         false,
