@@ -14,10 +14,7 @@ import {
   shipsValidationMessages,
 } from "../../utils/constants";
 import { VALID_ADD_SHIPS_INPUTS } from "../test-utils/constants";
-import {
-  addShipsErrorMessageTemplate,
-  placeShipFailedSilentlyErrorMessage,
-} from "../utils/constants";
+import { addShipsErrorMessageTemplate } from "../utils/constants";
 
 export function describeAddShipsTests() {
   describe("addShips", () => {
@@ -77,7 +74,7 @@ export function describeAddShipsTests() {
         const ship1Info = { ...ship1.getInfo() };
         const ship2Info = { ...ship2.getInfo() };
 
-        // mock the gameboard.getShipAt method to return the ships
+        // mock the gameboard.getShipAt method to return the ships infos
         gameboard.getShipAt
           .mockReturnValueOnce(ship1Info)
           .mockReturnValueOnce(ship2Info);
@@ -98,6 +95,45 @@ export function describeAddShipsTests() {
         }
       );
 
+      it("should call the gameboard.placeShip() method with the valid ship, coordinates, and direction arguments for each valid ship placement information object in the ships array", () => {
+        const gameboard = createMockGameboard();
+        const player = new Player(PLAYER_TYPES.REAL, gameboard);
+        const ship1 = createMockShip(1);
+        const coordinates1 = [0, 0];
+        const direction1 = DIRECTIONS.HORIZONTAL;
+        const ship2 = createMockShip(2);
+        const coordinates2 = [1, 0];
+        const direction2 = DIRECTIONS.VERTICAL;
+        const ships = [
+          {
+            ship: ship1,
+            coordinates: coordinates1,
+            direction: direction1,
+          },
+          {
+            ship: ship2,
+            coordinates: coordinates2,
+            direction: direction2,
+          },
+        ];
+
+        player.addShips(ships);
+
+        expect(gameboard.placeShip).toHaveBeenCalledTimes(2);
+        expect(gameboard.placeShip).toHaveBeenNthCalledWith(
+          1,
+          ships[0].ship,
+          ships[0].coordinates,
+          ships[0].direction
+        );
+        expect(gameboard.placeShip).toHaveBeenNthCalledWith(
+          2,
+          ships[1].ship,
+          ships[1].coordinates,
+          ships[1].direction
+        );
+      });
+
       it("should return true if the ships are placed successfully", () => {
         const gameboard = createMockGameboard();
         const player = new Player(PLAYER_TYPES.REAL, gameboard);
@@ -114,6 +150,9 @@ export function describeAddShipsTests() {
             direction: DIRECTIONS.VERTICAL,
           },
         ];
+
+        // mock the gameboard.placeShip method to return true for each ship
+        gameboard.placeShip.mockReturnValueOnce(true).mockReturnValueOnce(true);
 
         expect(player.addShips(ships)).toBe(true);
       });
@@ -138,27 +177,6 @@ export function describeAddShipsTests() {
           createMessageFromTemplate(addShipsErrorMessageTemplate, {
             errorMessage:
               gameboardCoordinatesValidationMessages.invalid.outOfBounds,
-            shipName: ship.name,
-            coordinates: createCoordinatesString(coordinates),
-            direction: direction.toLowerCase(),
-          })
-        );
-      });
-
-      it("should throw an error if the gameboard.placeShip() method did not return true for the ship", () => {
-        const gameboard = createMockGameboard();
-        const player = new Player(PLAYER_TYPES.REAL, gameboard);
-        const ship = createMockShip(1);
-        const coordinates = [0, 0];
-        const direction = DIRECTIONS.HORIZONTAL;
-        const ships = [{ ship, coordinates, direction }];
-
-        // mock the gameboard.placeShip method to return false
-        gameboard.placeShip.mockReturnValueOnce(false);
-
-        expect(() => player.addShips(ships)).toThrow(
-          createMessageFromTemplate(addShipsErrorMessageTemplate, {
-            errorMessage: placeShipFailedSilentlyErrorMessage,
             shipName: ship.name,
             coordinates: createCoordinatesString(coordinates),
             direction: direction.toLowerCase(),
@@ -259,96 +277,6 @@ export function describeAddShipsTests() {
         expect(player.getShipAt([2, 2])).toBeNull();
 
         // expect the gameboard.placeShip() method to have been called only 3 times since ship3 has thrown an error
-        expect(gameboard.placeShip).toHaveBeenCalledTimes(3);
-      });
-
-      it("should throw an error if the gameboard.placeShip() method did not return true for any of the ships in the list but the ships for which the placeShip() method has returned true already are added to the gameboard successfully", () => {
-        const gameboard = createMockGameboard();
-        const player = new Player(PLAYER_TYPES.REAL, gameboard);
-        const ship1 = createMockShip(1);
-        const coordinates1 = [0, 0];
-        const direction1 = DIRECTIONS.HORIZONTAL;
-        const ship2 = createMockShip(1);
-        const coordinates2 = [1, 0];
-        const direction2 = DIRECTIONS.VERTICAL;
-        const ship3 = createMockShip(1);
-        const coordinates3 = [1, 1];
-        const direction3 = DIRECTIONS.HORIZONTAL;
-        const ship4 = createMockShip(1);
-        const coordinates4 = [2, 1];
-        const direction4 = DIRECTIONS.VERTICAL;
-        const ship5 = createMockShip(1);
-        const coordinates5 = [2, 2];
-        const direction5 = DIRECTIONS.HORIZONTAL;
-
-        const ships = [
-          {
-            ship: ship1,
-            coordinates: coordinates1,
-            direction: direction1,
-          },
-          {
-            ship: ship2,
-            coordinates: coordinates2,
-            direction: direction2,
-          },
-          {
-            ship: ship3,
-            coordinates: coordinates3,
-            direction: direction3,
-          },
-          {
-            ship: ship4,
-            coordinates: coordinates4,
-            direction: direction4,
-          },
-          {
-            ship: ship5,
-            coordinates: coordinates5,
-            direction: direction5,
-          },
-        ];
-
-        // get the mocked ship infos
-        const ship1Info = { ...ship1.getInfo() };
-        const ship2Info = { ...ship2.getInfo() };
-
-        // mock the gameboard.placeShip method to return appropriate statuses for the ships
-        gameboard.placeShip
-          .mockReturnValueOnce(true) // ship1 placed status
-          .mockReturnValueOnce(true) // ship2 placed status
-          .mockReturnValueOnce(false); // ship3 placed status
-
-        // mock the gameboard.getShipAt method to return appropriate data
-        gameboard.getShipAt
-          .mockReturnValueOnce(ship1Info) // returned ship info for ship1
-          .mockReturnValueOnce(ship2Info) // returned ship info for ship2
-          .mockReturnValueOnce(null) // returned null for ship3 as it is not placed
-          .mockReturnValueOnce(null) // returned null for ship4 as it is not placed
-          .mockReturnValueOnce(null); // returned null for ship5 as it is not placed
-
-        // expect an error to be thrown while adding ships to the gameboard due to the placeShip() method not returning true for ship3
-        expect(() => player.addShips(ships)).toThrow(
-          createMessageFromTemplate(addShipsErrorMessageTemplate, {
-            errorMessage: placeShipFailedSilentlyErrorMessage,
-            shipName: ship3.name,
-            coordinates: createCoordinatesString(coordinates3),
-            direction: direction3.toLowerCase(),
-          })
-        );
-
-        // expect the ships for which the placeShip() method has returned true already to be added to the gameboard
-        expect(player.getShipAt([0, 0])).toStrictEqual(ship1Info);
-        expect(player.getShipAt([1, 0])).toStrictEqual(ship2Info);
-
-        // expect the ship for which the placeShip() method has not returned true to not be added to the gameboard
-        expect(player.getShipAt([1, 1])).toBeNull();
-
-        // expect the ships in the list after the ship for which the placeShip() method has not returned true to not be added to the gameboard
-        expect(player.getShipAt([2, 1])).toBeNull();
-        expect(player.getShipAt([2, 2])).toBeNull();
-
-        // expect the gameboard.placeShip() method to have been called only 3 times since ship3 has caused an error
         expect(gameboard.placeShip).toHaveBeenCalledTimes(3);
       });
     });

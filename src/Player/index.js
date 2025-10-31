@@ -7,7 +7,6 @@ import {
   addShipErrorMessageTemplate,
   addShipsErrorMessageTemplate,
   getShipAtErrorMessageTemplate,
-  placeShipFailedSilentlyErrorMessage,
   receiveAttackErrorMessageTemplate,
 } from "./utils/constants";
 import {
@@ -52,45 +51,6 @@ class Player {
     }
   }
 
-  addShips(ships) {
-    const validationResult = validateAddShipsInputs(ships);
-    if (!validationResult.isValid) {
-      throw new Error(validationResult.message);
-    }
-
-    for (const shipInfo of ships) {
-      const { ship, coordinates, direction } = shipInfo;
-      try {
-        const isPlaced = this.#gameboard.placeShip(
-          ship,
-          coordinates,
-          direction
-        );
-        if (!isPlaced) {
-          throw new Error(
-            createMessageFromTemplate(addShipsErrorMessageTemplate, {
-              errorMessage: placeShipFailedSilentlyErrorMessage,
-              shipName: ship.name,
-              coordinates: createCoordinatesString(coordinates),
-              direction: direction.toLowerCase(),
-            })
-          );
-        }
-      } catch (error) {
-        throw new Error(
-          createMessageFromTemplate(addShipsErrorMessageTemplate, {
-            errorMessage: error.message,
-            shipName: ship.name,
-            coordinates: createCoordinatesString(coordinates),
-            direction: direction.toLowerCase(),
-          })
-        );
-      }
-    }
-
-    return true;
-  }
-
   addShip(ship, coordinates, direction) {
     try {
       return this.#gameboard.placeShip(ship, coordinates, direction);
@@ -104,6 +64,31 @@ class Player {
         })
       );
     }
+  }
+
+  addShips(ships) {
+    const validationResult = validateAddShipsInputs(ships);
+    if (!validationResult.isValid) {
+      throw new Error(validationResult.message);
+    }
+
+    for (const shipInfo of ships) {
+      const { ship, coordinates, direction } = shipInfo;
+      try {
+        this.#gameboard.placeShip(ship, coordinates, direction);
+      } catch (error) {
+        throw new Error(
+          createMessageFromTemplate(addShipsErrorMessageTemplate, {
+            errorMessage: error.message,
+            shipName: ship.name,
+            coordinates: createCoordinatesString(coordinates),
+            direction: direction.toLowerCase(),
+          })
+        );
+      }
+    }
+
+    return true;
   }
 
   receiveAttack(coordinates) {
