@@ -1,4 +1,4 @@
-import { playerTypeValidationMessages } from "../../utils/constants";
+import { playerValidationMessages } from "../../utils/constants";
 
 export const gameInputsValidationMessages = {
   valid: {
@@ -12,7 +12,7 @@ export const gameInputsValidationMessages = {
 export const playersListValidationMessages = {
   valid: {
     default: "Players list is valid",
-    playerType: playerTypeValidationMessages.valid,
+    player: playerValidationMessages.valid,
   },
   invalid: {
     default: "Invalid players list",
@@ -22,26 +22,7 @@ export const playersListValidationMessages = {
     notAnArray: "Players list must be an array.",
     notAnArrayOfAtLeast2Elements:
       "Players list must be an array of at least 2 elements.",
-    notAnArrayOfObjects: "Players list must be an array of objects.",
-    noIdProperty: "Players list objects must have an id property.",
-    noTypeProperty: "Players list objects must have a type property.",
-    playerType: playerTypeValidationMessages.invalid,
-    noGetShipAtMethod: "Players list objects must have a getShipAt method.",
-    getShipAtMethodNotAFunction:
-      "Players list objects getShipAt method must be a function.",
-    noAddShipMethod: "Players list objects must have an addShip method.",
-    addShipMethodNotAFunction:
-      "Players list objects addShip method must be a function.",
-    noAddShipsMethod: "Players list objects must have an addShips method.",
-    addShipsMethodNotAFunction:
-      "Players list objects addShips method must be a function.",
-    noReceiveAttackMethod:
-      "Players list objects must have a receiveAttack method.",
-    receiveAttackMethodNotAFunction:
-      "Players list objects receiveAttack method must be a function.",
-    noGetBoardMethod: "Players list objects must have a getBoard method.",
-    getBoardMethodNotAFunction:
-      "Players list objects getBoard method must be a function.",
+    player: playerValidationMessages.invalid,
   },
-  playerType: playerTypeValidationMessages,
+  player: playerValidationMessages,
 };

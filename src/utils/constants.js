@@ -165,6 +165,36 @@ export const playerTypeValidationMessages = {
   },
 };
 
+export const playerValidationMessages = {
+  valid: {
+    default: "Player is valid",
+    type: playerTypeValidationMessages.valid,
+  },
+  invalid: {
+    default: "Invalid player",
+    required: "Player is required. It cannot be null or undefined.",
+    isUndefined: "Player is required. It cannot be null or undefined.",
+    isNull: "Player is required. It cannot be null or undefined.",
+    notAnObject: "Player must be an object.",
+    noIdProperty: "Player must have an id property.",
+    noTypeProperty: "Player must have a type property.",
+    type: playerTypeValidationMessages.invalid,
+    noGetShipAtMethod: "Player must have a getShipAt method.",
+    getShipAtMethodNotAFunction:
+      "Player's getShipAt method must be a function.",
+    noAddShipMethod: "Player must have an addShip method.",
+    addShipMethodNotAFunction: "Player's addShip method must be a function.",
+    noAddShipsMethod: "Player must have an addShips method.",
+    addShipsMethodNotAFunction: "Player's addShips method must be a function.",
+    noReceiveAttackMethod: "Player must have a receiveAttack method.",
+    receiveAttackMethodNotAFunction:
+      "Player's receiveAttack method must be a function.",
+    noGetBoardMethod: "Player must have a getBoard method.",
+    getBoardMethodNotAFunction: "Player's getBoard method must be a function.",
+  },
+  type: playerTypeValidationMessages,
+};
+
 export const gameboardDimensionsValidationMessages = {
   valid: {
     default: "Gameboard dimensions are valid",

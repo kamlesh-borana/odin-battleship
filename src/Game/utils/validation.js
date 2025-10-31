@@ -1,10 +1,5 @@
-import {
-  createValidationResult,
-  hasProperty,
-  isFunction,
-  isObject,
-} from "../../utils";
-import { validatePlayerType } from "../../utils/player";
+import { createValidationResult } from "../../utils";
+import { validatePlayer } from "../../utils/player";
 import { validateIsArrayOfAtLeast2Elements } from "../../utils/validation";
 import {
   gameInputsValidationMessages,
@@ -21,104 +16,13 @@ const validatePlayersList = (
     return isArrayOfAtLeast2ElementsValidationResult;
   }
 
-  if (!players.every((player) => isObject(player))) {
-    return createValidationResult(
-      false,
-      validationMessagesObj.invalid.notAnArrayOfObjects
-    );
-  }
-
   for (const player of players) {
-    if (!hasProperty(player, "id")) {
-      return createValidationResult(
-        false,
-        validationMessagesObj.invalid.noIdProperty
-      );
-    }
-
-    if (!hasProperty(player, "type")) {
-      return createValidationResult(
-        false,
-        validationMessagesObj.invalid.noTypeProperty
-      );
-    }
-
-    const playerTypeValidationResult = validatePlayerType(
-      player.type,
-      validationMessagesObj.playerType
+    const playerValidationResult = validatePlayer(
+      player,
+      validationMessagesObj.player
     );
-    if (!playerTypeValidationResult.isValid) {
-      return playerTypeValidationResult;
-    }
-
-    if (!hasProperty(player, "getShipAt")) {
-      return createValidationResult(
-        false,
-        validationMessagesObj.invalid.noGetShipAtMethod
-      );
-    }
-
-    if (!isFunction(player.getShipAt)) {
-      return createValidationResult(
-        false,
-        validationMessagesObj.invalid.getShipAtMethodNotAFunction
-      );
-    }
-
-    if (!hasProperty(player, "addShip")) {
-      return createValidationResult(
-        false,
-        validationMessagesObj.invalid.noAddShipMethod
-      );
-    }
-
-    if (!isFunction(player.addShip)) {
-      return createValidationResult(
-        false,
-        validationMessagesObj.invalid.addShipMethodNotAFunction
-      );
-    }
-
-    if (!hasProperty(player, "addShips")) {
-      return createValidationResult(
-        false,
-        validationMessagesObj.invalid.noAddShipsMethod
-      );
-    }
-
-    if (!isFunction(player.addShips)) {
-      return createValidationResult(
-        false,
-        validationMessagesObj.invalid.addShipsMethodNotAFunction
-      );
-    }
-
-    if (!hasProperty(player, "receiveAttack")) {
-      return createValidationResult(
-        false,
-        validationMessagesObj.invalid.noReceiveAttackMethod
-      );
-    }
-
-    if (!isFunction(player.receiveAttack)) {
-      return createValidationResult(
-        false,
-        validationMessagesObj.invalid.receiveAttackMethodNotAFunction
-      );
-    }
-
-    if (!hasProperty(player, "getBoard")) {
-      return createValidationResult(
-        false,
-        validationMessagesObj.invalid.noGetBoardMethod
-      );
-    }
-
-    if (!isFunction(player.getBoard)) {
-      return createValidationResult(
-        false,
-        validationMessagesObj.invalid.getBoardMethodNotAFunction
-      );
+    if (!playerValidationResult.isValid) {
+      return playerValidationResult;
     }
   }
 
