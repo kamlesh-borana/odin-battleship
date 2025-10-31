@@ -1,5 +1,6 @@
 import { createGameboardBoard, createUniqueId } from "../utils";
 import { DEFAULT_GAMEBOARD_DIMENSIONS, DIRECTIONS } from "../utils/constants";
+import { gameboardReceiveAttackValidationMessages } from "./utils/constants";
 import {
   validateGameboardInputs,
   validateGetShipAtInputs,
@@ -131,7 +132,13 @@ class Gameboard {
 
     const ship = cell.ship;
     if (ship) {
-      return ship.hit();
+      const isHit = ship.hit();
+      if (!isHit) {
+        throw new Error(
+          gameboardReceiveAttackValidationMessages.invalid.shipHitFailedSilently
+        );
+      }
+      return true;
     }
 
     return true;

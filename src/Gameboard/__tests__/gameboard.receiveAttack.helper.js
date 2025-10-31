@@ -76,17 +76,18 @@ export function describeReceiveAttackTests() {
         expect(gameboard.receiveAttack([1, 1])).toBe(true);
       });
 
-      it("should return false when the hit() method of the ship returns false", () => {
+      it("should throw an error when the ship's hit() method returns false", () => {
         const gameboard = new Gameboard();
         const ship = createMockShip(1);
 
         gameboard.placeShip(ship, [0, 0], DIRECTIONS.HORIZONTAL);
 
-        // Mock the hit() method of the ship to return false
+        // Mock the ship's hit() method to return false
         ship.hit.mockReturnValue(false);
 
-        // The attack is successful but the ship is not hit
-        expect(gameboard.receiveAttack([0, 0])).toBe(false);
+        expect(() => gameboard.receiveAttack([0, 0])).toThrow(
+          gameboardReceiveAttackValidationMessages.invalid.shipHitFailedSilently
+        );
       });
     });
 

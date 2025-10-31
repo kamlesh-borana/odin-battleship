@@ -57,5 +57,7 @@ export const gameboardReceiveAttackValidationMessages = {
     noShipsPlaced: "Cannot receive attack on a gameboard with no ships placed.",
     alreadyHit: "Cannot receive attack on a cell that is already hit.",
     alreadyMissed: "Cannot receive attack on a cell that is already missed.",
+    shipHitFailedSilently:
+      "Failed to hit the ship. Ship's hit() method returned false causing the attack to fail silently.",
   },
 };
