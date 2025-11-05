@@ -6,7 +6,10 @@
     "test": "jest --verbose",
     "test:watch": "jest --verbose --watch",
     "dev": "webpack serve --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "sync": "git checkout gh-pages && git merge main --no-edit",
+    "predeploy": "npm run build",
+    "deploy": "git add dist -f && git commit -m \"Deployment commit\" && git subtree push --prefix dist origin gh-pages"
   },
   "author": "",
   "license": "ISC",
