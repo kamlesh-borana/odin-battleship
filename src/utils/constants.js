@@ -191,6 +191,9 @@ export const playerValidationMessages = {
       "Player's receiveAttack method must be a function.",
     noGetBoardMethod: "Player must have a getBoard method.",
     getBoardMethodNotAFunction: "Player's getBoard method must be a function.",
+    noAllShipsSunkMethod: "Player must have an allShipsSunk method.",
+    allShipsSunkMethodNotAFunction:
+      "Player's allShipsSunk method must be a function.",
   },
   type: playerTypeValidationMessages,
 };

@@ -273,9 +273,10 @@ export const testIsNotAnArrayOfTwoPositiveIntegerNumbersError = (
 export const testIsNotAnObjectError = (
   argumentName,
   callback,
-  errorMessagesObj
+  errorMessagesObj,
+  isOptional = false
 ) => {
-  testHasNoValueError(argumentName, callback, errorMessagesObj);
+  testHasNoValueError(argumentName, callback, errorMessagesObj, isOptional);
 
   it(`should throw an error if ${argumentName} is not an object`, () => {
     expect(() => callback("not an object")).toThrow(
@@ -354,4 +355,19 @@ export const testIsNotAnArrayOfAtLeast2ElementsError = (
       expect(() => callback(value)).toThrow(errorMessage);
     }
   );
+};
+
+export const testIsNotABooleanError = (
+  argumentName,
+  callback,
+  errorMessagesObj,
+  isOptional = false
+) => {
+  testHasNoValueError(argumentName, callback, errorMessagesObj, isOptional);
+
+  it(`should throw an error if ${argumentName} is not a boolean`, () => {
+    expect(() => callback("not a boolean")).toThrow(
+      errorMessagesObj.notABoolean
+    );
+  });
 };

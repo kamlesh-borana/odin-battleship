@@ -157,6 +157,12 @@ class Gameboard {
     );
     return board;
   }
+
+  reset() {
+    this.#board = createGameboardBoard(this.#dimensions);
+    this.#ships = [];
+    return true;
+  }
 }
 
 export default Gameboard;

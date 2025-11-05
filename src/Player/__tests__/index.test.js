@@ -12,6 +12,7 @@ import {
 } from "../../utils/constants";
 import { describeAddShipTests } from "./player.addShip.helper";
 import { describeAddShipsTests } from "./player.addShips.helper";
+import { describeAllShipsSunkTests } from "./player.allShipsSunk.helper";
 import { describeGetBoardTests } from "./player.getBoard.helper";
 import { describeGetShipAtTests } from "./player.getShipAt.helper";
 import { describeReceiveAttackTests } from "./player.receiveAttack.helper";
@@ -120,6 +121,9 @@ describe("Player class module", () => {
 
         // Run get board tests
         describeGetBoardTests();
+
+        // Run all ships sunk tests
+        describeAllShipsSunkTests();
       });
     });
   });

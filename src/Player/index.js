@@ -107,6 +107,14 @@ class Player {
   getBoard() {
     return this.#gameboard.getBoard();
   }
+
+  allShipsSunk() {
+    return this.#gameboard.allShipsSunk();
+  }
+
+  resetGameboard() {
+    return this.#gameboard.reset();
+  }
 }
 
 export default Player;

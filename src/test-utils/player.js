@@ -10,6 +10,7 @@ export const createMockPlayer = (type, options = {}) => {
     addShipsReturnValue = true,
     receiveAttackReturnValue = true,
     getBoardReturnValue = createGameboardBoard(DEFAULT_GAMEBOARD_DIMENSIONS),
+    allShipsSunkReturnValue = false,
   } = options;
   return {
     id,
@@ -19,6 +20,7 @@ export const createMockPlayer = (type, options = {}) => {
     addShips: jest.fn().mockReturnValue(addShipsReturnValue),
     receiveAttack: jest.fn().mockReturnValue(receiveAttackReturnValue),
     getBoard: jest.fn().mockReturnValue(getBoardReturnValue),
+    allShipsSunk: jest.fn().mockReturnValue(allShipsSunkReturnValue),
   };
 };
 
@@ -165,5 +167,34 @@ export const testInvalidPlayerError = (
         getBoard: "not a function",
       })
     ).toThrow(errorMessagesObj.getBoardMethodNotAFunction);
+  });
+
+  it(`should throw an error if ${argumentName} object does not have an allShipsSunk method`, () => {
+    expect(() =>
+      callback({
+        id: "123",
+        type: PLAYER_TYPES.REAL,
+        getShipAt: () => {},
+        addShip: () => {},
+        addShips: () => {},
+        receiveAttack: () => {},
+        getBoard: () => {},
+      })
+    ).toThrow(errorMessagesObj.noAllShipsSunkMethod);
+  });
+
+  it(`should throw an error if ${argumentName} object has an allShipsSunk method that is not a function`, () => {
+    expect(() =>
+      callback({
+        id: "123",
+        type: PLAYER_TYPES.REAL,
+        getShipAt: () => {},
+        addShip: () => {},
+        addShips: () => {},
+        receiveAttack: () => {},
+        getBoard: () => {},
+        allShipsSunk: "not a function",
+      })
+    ).toThrow(errorMessagesObj.allShipsSunkMethodNotAFunction);
   });
 };

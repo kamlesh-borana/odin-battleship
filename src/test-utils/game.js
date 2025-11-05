@@ -1,3 +1,4 @@
+import { createUniqueId } from "../utils";
 import { createMockShip } from "./ship";
 import { testIsNotAnArrayOfAtLeast1ElementError } from "./validation";
 
@@ -37,4 +38,17 @@ export const testInvalidShipsError = (
       ).toThrow(errorMessagesObj.noDirectionPropertyInObject);
     });
   });
+};
+
+export const createMockGameUIView = () => {
+  return { id: createUniqueId(), renderGameplayUI: jest.fn() };
+};
+
+export const createMockGameUIControls = () => {
+  return {
+    id: createUniqueId(),
+    startGame: jest.fn(),
+    addAttackEventListenerOnOpponentBoard: jest.fn(),
+    endGame: jest.fn(),
+  };
 };

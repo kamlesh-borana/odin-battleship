@@ -133,5 +133,19 @@ export const validatePlayer = (
     );
   }
 
+  if (!hasProperty(player, "allShipsSunk")) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.noAllShipsSunkMethod
+    );
+  }
+
+  if (!isFunction(player.allShipsSunk)) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.allShipsSunkMethodNotAFunction
+    );
+  }
+
   return createValidationResult(true, validationMessagesObj.valid.default);
 };

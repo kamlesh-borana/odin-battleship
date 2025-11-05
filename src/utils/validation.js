@@ -1,8 +1,10 @@
 import {
   createValidationResult,
   isArray,
+  isBoolean,
   isEmptyString,
   isFiniteNumber,
+  isFunction,
   isIntegerNumber,
   isNegativeNumber,
   isNull,
@@ -330,6 +332,44 @@ export const validateIsArrayOfAtLeast2Elements = (
     return createValidationResult(
       false,
       validationMessagesObj.invalid.notAnArrayOfAtLeast2Elements
+    );
+  }
+
+  return createValidationResult(true, validationMessagesObj.valid.default);
+};
+
+export const validateIsBoolean = (value, validationMessagesObj) => {
+  const hasValueValidationResult = validateHasValue(
+    value,
+    validationMessagesObj
+  );
+  if (!hasValueValidationResult.isValid) {
+    return hasValueValidationResult;
+  }
+
+  if (!isBoolean(value)) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.notABoolean
+    );
+  }
+
+  return createValidationResult(true, validationMessagesObj.valid.default);
+};
+
+export const validateIsFunction = (value, validationMessagesObj) => {
+  const hasValueValidationResult = validateHasValue(
+    value,
+    validationMessagesObj
+  );
+  if (!hasValueValidationResult.isValid) {
+    return hasValueValidationResult;
+  }
+
+  if (!isFunction(value)) {
+    return createValidationResult(
+      false,
+      validationMessagesObj.invalid.notAFunction
     );
   }
 
